@@ -33,7 +33,11 @@ for row, planet in enumerate(planets):
     )
     for i in range(len(data)):
         data[i] = data[i][:-1]
-    planets_data[row, :] = np.append(np.append(planet, data), masses[planet])
+    data = data.astype(np.float)
+    data[3:6] *= 0.210945021
+    data = data.astype(str)
+    planets_data[row, :] = np.append(
+        np.append(planet, data), masses[planet] / masses["Sun"]
+    )
 
-print(planets_data.astype(str))
 np.savetxt("datafiles/planets_data.txt", planets_data.astype(str), fmt="%s")
