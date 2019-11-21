@@ -57,6 +57,7 @@ class SolarSystem {
 
     public:
     std::vector<CelestialBody> bodies;
+
     SolarSystem(std::vector<CelestialBody> bodies_) {
         bodies = bodies_;
     }
@@ -73,8 +74,6 @@ class SolarSystem {
 
         double m;
         string name;
-        arma::vec R;
-        arma::vec F;
 
         std::ifstream infile(filename);
         while (infile >> name >> x >> y >> z >> vx >> vy >> vz >> m)
@@ -83,6 +82,13 @@ class SolarSystem {
             bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
         }
         infile.close();
+
+        get_force();
+        
+    }
+    void get_force() {
+        arma::vec R;
+        arma::vec F;
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
             for(int j=0; j < bodies.size(); j++) {
@@ -92,10 +98,9 @@ class SolarSystem {
                   / std::pow(arma::norm(R), 3);
                 }
             }    
-            bodies[i].set_force(F);
-            cout << i << endl;
-            F.print();
-
+        bodies[i].set_force(F);
+        cout << i << endl;
+        F.print();
         }
     }
 };
