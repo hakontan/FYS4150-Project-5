@@ -19,6 +19,7 @@ planets = []
 for index, arg in enumerate(sys.argv[1:]):
     planets.append(arg)
 planets_data = np.zeros((len(planets), 8), dtype=object)
+
 for row, planet in enumerate(planets):
     with open(f"datafiles/{planet}.txt") as infile:
         skiprow = 1
@@ -34,7 +35,7 @@ for row, planet in enumerate(planets):
     for i in range(len(data)):
         data[i] = data[i][:-1]
     data = data.astype(np.float)
-    data[3:6] *= 0.210945021
+    data[3:6] *= 365
     data = data.astype(str)
     planets_data[row, :] = np.append(
         np.append(planet, data), masses[planet] / masses["Sun"]

@@ -48,7 +48,13 @@ struct CelestialBody {
     }
 
     void set_force(arma::vec F_) {
+        cout << "new" << endl;
+        F_.print();
+        cout << "over" << endl;
+        F.print();
         F = F_;
+        cout << "under" << endl;
+        F.print();
     }
 
 };
@@ -99,12 +105,16 @@ class SolarSystem {
             for(int j=0; j < bodies.size(); j++) {
                 if(i!=j) {
                   R = bodies[i].pos - bodies[j].pos;
+                  //R.print();
                   F += -(G * R * bodies[i].mass * bodies[j].mass)
-                  / std::pow(std::sqrt(R(0) * R(0) + R(1) * R(1) + R(2) * R(2)), 3);
-                       // / std::pow(arma::norm(R, 2), 3);
+                   / std::pow(std::sqrt(R(0) * R(0) + R(1) * R(1) + R(2) * R(2)), 3);
+                     //  / std::pow(arma::norm(R, 2), 3);
                 }
-            }    
-        bodies[i].set_force(F);
+            }
+        //out << R(0) << endl;
+        cout << F(0) << endl;    
+        bodies[i].F = F; //set_force(F);
+
         // F.print();
         }
     }
@@ -122,7 +132,7 @@ class Nbody{
 
     arma::vec a_i = arma::zeros(3);
     std::vector<CelestialBody> bodies;
-    double N_bodies;
+    int N_bodies;
     int N;
     double dt;
     int writenr;
@@ -134,9 +144,12 @@ class Nbody{
         N = steps;
         dt = timesteps;
         system = SolarSystem(filename);
-        bodies = system.bodies;
+        //bodies = system.bodies;
+        //cout << "jeff" << bodies[0].pos(0) << endl;
+        //bodies[0].pos(0)++;
+        //cout << "jeff" << bodies[0].pos(0) << endl;
         datapoints = (int) std::round(N/writenr);
-        N_bodies = bodies.size();
+        N_bodies = system.bodies.size();
 
         x_coords = arma::zeros(datapoints, N_bodies);
         y_coords = arma::zeros(datapoints, N_bodies);
@@ -152,7 +165,7 @@ class Nbody{
 
         int c = 0;
         cout << "no" << endl;
-        bodies[0].pos[0] = 0;
+        /*bodies[0].pos[0] = 0;
         bodies[0].pos[1] = 0;
         bodies[0].pos[2] = 0;
         bodies[1].pos[0] = 1;
@@ -161,27 +174,32 @@ class Nbody{
 
         bodies[1].vel[1] = 6.28;
         bodies[1].vel[0] = 0;
-        bodies[1].vel[2] = 0;
+        bodies[1].vel[2] = 0;*/
         cout << "g" << endl;
-        bodies[1].pos.print();
+        system.bodies[1].pos.print();
 
         for (int i=0; i < N; i++) {
             //cout << "updating step: " << i << endl;
             for (int j=0; j<N_bodies; j++) {
                 //cout << bodies[j].name << endl;
-                bodies[j].pos += dt * bodies[j].vel;
-                bodies[j].vel += dt * bodies[j].F / bodies[j].mass;
+                system.bodies[j].pos += dt * system.bodies[j].vel;
+                //cout << bodies[j].pos[0] << endl;
+                system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
+                //cout << "over" << endl;
+                //bodies[j].F.print();
                 system.update_force();
+                //cout << "under" << endl;
+                //bodies[j].F.print();
                 //cout << bodies[j].mass << endl;
                 
 
-                x_coords(i, j) = bodies[j].pos[0];
-                y_coords(i, j) = bodies[j].pos[1];
-                z_coords(i, j) = bodies[j].pos[2];
+                x_coords(i, j) = system.bodies[j].pos[0];
+                y_coords(i, j) = system.bodies[j].pos[1];
+                z_coords(i, j) = system.bodies[j].pos[2];
 
-                vx_coords(i, j) = bodies[j].vel[0];
-                vy_coords(i, j) = bodies[j].vel[1];
-                vz_coords(i, j) = bodies[j].vel[2];
+                vx_coords(i, j) = system.bodies[j].vel[0];
+                vy_coords(i, j) = system.bodies[j].vel[1];
+                vz_coords(i, j) = system.bodies[j].vel[2];
 
                 //vx_coords.save("x_coords.bin", arma_binary);
                 //vy_coords.save("x_coords.bin", arma_binary);
@@ -224,7 +242,7 @@ int main(){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(100, 0.01, 1,"datafiles/planets_data.txt");
+    Nbody test = Nbody(10000, 0.001, 1,"datafiles/planets_data.txt");
     test.forward_euler();
 
     return 0;
