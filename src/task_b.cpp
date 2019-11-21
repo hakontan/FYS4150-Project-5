@@ -22,8 +22,15 @@ struct CelestialBody {
 
 
     CelestialBody(arma::vec p, arma::vec v, double m, string name_) {
-        pos = p / AU_m;
-        vel = v * AUperYr;
+        pos[0] = x;
+        pos[1] = y;
+        pos[2] = z;
+        vel[0] = vx;
+        vel[1] = vy;
+        vel[2] = vz;
+
+        pos /= AU_m;
+        vel /= AUperYr;
         mass = m / M_sun;
         name = name_;
   }
@@ -54,17 +61,20 @@ class SolarSystem {
         string name;
 
         std:ifstream infile(filename)
-        while (infile >> name  >> m >> x >> y >> z >> vx >> vy >> vz)
-        {
+        while (infile >> name >> x >> y >> z >> vx >> vy >> vz >> m)
+        {   
+
+            bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name))
         }
         infile.close()
             
         }
+
     }
 };
 
 class Nbody{
-    
+
 }
 
 int main(){
