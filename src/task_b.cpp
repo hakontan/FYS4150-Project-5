@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <vector>
 #include <armadillo>
@@ -40,7 +41,7 @@ class SolarSystem {
     SolarSystem(std::vector<CelestialBody> bodies_) {
         bodies = bodies_;
     }
-    SolarSystem(std::vector<string> filenames) {
+    SolarSystem(std::vector<string> filename) {
         double x;
         double y;
         double z;
@@ -50,12 +51,21 @@ class SolarSystem {
         double vz;
 
         double m;
-        for (int i=0; i <= filenames.size(); i++) {
-            std::infile.open(filenames[i]);
+        string name;
+
+        std:ifstream infile(filename)
+        while (infile >> name  >> m >> x >> y >> z >> vx >> vy >> vz)
+        {
+        }
+        infile.close()
             
         }
     }
 };
+
+class Nbody{
+    
+}
 
 int main(){
     arma::vec pos = arma::zeros(3);
