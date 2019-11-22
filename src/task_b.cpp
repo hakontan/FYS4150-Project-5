@@ -187,6 +187,38 @@ class Nbody{
         }
     }
 
+    void velocity_verlet() {
+
+        double ai_prev;
+        int c = 0;
+        for (int i = 0; i < N; i++) {
+        cout << datapoints << " " << N_bodies << endl;
+            for (int j = 0; j < N_bodies; j++) {
+
+                ai_prev = system.bodies[j].F / system.bodies[j].mass;
+                system.bodies[j].pos += dt * system.bodies[j].vel + 0.5 * dt * dt * ai_prev;
+                system.update_force_potential();
+                system.bodies[j].vel += 0.5 * dt * (ai_prev + ystem.bodies[j].F / system.bodies[j].mass);
+
+                if (i == c * datapoints) {
+                    x_coords(i, j) = system.bodies[j].pos[0];
+                    y_coords(i, j) = system.bodies[j].pos[1];
+                    z_coords(i, j) = system.bodies[j].pos[2];
+
+                    vx_coords(i, j) = system.bodies[j].vel[0];
+                    vy_coords(i, j) = system.bodies[j].vel[1];
+                    vz_coords(i, j) = system.bodies[j].vel[2];
+
+                    V_coords(i, j) = system.bodies[j].V;
+                    K_coords(i, j) = system.bodies[j].kinetic_energy();
+                    l_coords(i, j) = system.bodies[j].angular_moment();
+                    c += 1;
+                }   
+            }
+
+        }
+    }
+
     void write_pos(string filename, bool binary = false){
         if (binary == true){
             x_coords.save("x_" + filename + ".bin", arma::arma_binary);
