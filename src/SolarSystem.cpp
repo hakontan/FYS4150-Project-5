@@ -29,19 +29,18 @@ SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
         bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
     }
     infile.close();
-
     update_force_potential();
-
-
 }
 
 void SolarSystem::update_force_potential() {
     for(int i=0; i < bodies.size(); i++) {
         F = arma::zeros(3);
         V = 0;
+
         for(int j=0; j < bodies.size(); j++) {
             if(i!=j) {
                 R = bodies[i].pos - bodies[j].pos;
+
                 R_norm = arma::norm(R);
                 if (einstein) {
                     F += calculate_force_einstein(bodies[i].mass,
@@ -73,6 +72,7 @@ arma::vec SolarSystem::calculate_force_einstein(double mass_i,
                                                 double mass_j,
                                                 double l
                                                 ) {
+    cout << "jeff" << endl;
     return -(G * R * mass_i * mass_j) / std::pow(R_norm, 3)
-            * (1 + (3 * l * l / (R * R * C * C) ) );
+            * (1 + (3 * l * l / (R_norm * R_norm * C * C) ) );
 }
