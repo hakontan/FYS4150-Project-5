@@ -238,7 +238,6 @@ int main(int argc, char* argv[]){
             input_filename += "_";
         }
         else {
-            output_filename += ".txt";
             input_filename += ".txt";
         }
     }

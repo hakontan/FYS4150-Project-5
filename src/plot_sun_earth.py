@@ -4,7 +4,6 @@ import numpy as np
 
 filename = "simulation_"
 for index, arg in enumerate(sys.argv[1:]):
-    planets.append(arg)
     filename += arg
     if index < len(sys.argv[1:]) - 1:
         filename += "_"
