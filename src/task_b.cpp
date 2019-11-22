@@ -63,6 +63,7 @@ class SolarSystem {
     private:
     arma::vec R;
     arma::vec F;
+    double V;
 
     public:
     std::vector<CelestialBody> bodies;
@@ -102,21 +103,21 @@ class SolarSystem {
             
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
+            V = 0;
             for(int j=0; j < bodies.size(); j++) {
                 if(i!=j) {
                   R = bodies[i].pos - bodies[j].pos;
-                  //R.print();
                   F += -(G * R * bodies[i].mass * bodies[j].mass)
-                   / std::pow(std::sqrt(R(0) * R(0) + R(1) * R(1) + R(2) * R(2)), 3);
-                     //  / std::pow(arma::norm(R, 2), 3);
+                        / std::pow(arma::norm(R), 3);
+                    
                 }
             }
-        //out << R(0) << endl;
         cout << F(0) << endl;    
         bodies[i].F = F; //set_force(F);
 
         // F.print();
         }
+    
     }
 };
 
@@ -242,7 +243,7 @@ int main(){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(10000, 0.001, 1,"datafiles/planets_data.txt");
+    Nbody test = Nbody(10000, 0.001, 1, "datafiles/planets_data.txt");
     test.forward_euler();
 
     return 0;
