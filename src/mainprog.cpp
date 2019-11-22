@@ -37,11 +37,15 @@ int main(int argc, char* argv[]){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(1.5, 2000, 100, "datafiles/" + input_filename);
-    test.forward_euler();
-    test.write_pos(output_filename);
-            // Nbody(int steps, double timesteps, int writenr, string filename);
+    Nbody energy_euler = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
 
+    energy_euler.forward_euler();
+    energy_euler.write_energis_angmom("energy_euler.txt");
+
+    Nbody energy_verlet = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
+
+    energy_verlet.velocity_verlet();
+    energy_verlet.write_energis_angmom("energy_verlet.txt");
 
     return 0;
 }

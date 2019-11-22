@@ -3,7 +3,6 @@
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
 
         N = (int) std::round(years * NperYr);
-        cout << N << endl;
         dt = 1.0 / (double) NperYr;
         system = SolarSystem(filename, einstein, beta);
         datapoints = writenr;
@@ -21,11 +20,11 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
         V_coords = arma::zeros(datapoints, N_bodies + 1);
         K_coords = arma::zeros(datapoints, N_bodies + 1);
         l_coords = arma::zeros(datapoints, N_bodies + 1);
+
     }
 
 void Nbody::forward_euler() {
     int c = 0;
-    cout << datapoints << " " << N << " " << N_bodies << endl;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
             system.bodies[j].pos += dt * system.bodies[j].vel;
@@ -37,7 +36,6 @@ void Nbody::forward_euler() {
                 x_coords(c, j) = system.bodies[j].pos[0];
                 y_coords(c, j) = system.bodies[j].pos[1];
                 z_coords(c, j) = system.bodies[j].pos[2];
-                cout << j << " " << N_bodies << endl;
                 vx_coords(c, j) = system.bodies[j].vel[0];
                 vy_coords(c, j) = system.bodies[j].vel[1];
                 vz_coords(c, j) = system.bodies[j].vel[2];
@@ -51,8 +49,8 @@ void Nbody::forward_euler() {
             }
         }
         if (i == c * (int) std::round(N / (double) datapoints)){
-            //cout << i / ((double) N) * 100 << " % "<< endl;
             c++;
+            cout << i / ((double) N) * 100 << " % "<< endl;
         }
 
     }
@@ -61,17 +59,15 @@ void Nbody::forward_euler() {
 void Nbody::velocity_verlet() {
 
     int c = 0;
-    //cout << datapoints << " " << N << " " << N_bodies << endl;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
             ai_prev = system.bodies[j].F / system.bodies[j].mass;
             system.bodies[j].pos += dt * system.bodies[j].vel + 0.5 * dt * dt * ai_prev;
             system.update_force_potential();
+
             system.bodies[j].vel += 0.5 * dt * (ai_prev + system.bodies[j].F / system.bodies[j].mass);
 
             if (i == c * (int) std::round(N / (double) datapoints)) {
-                //cout << c * (int) std::round(N / (double) datapoints) << endl;
-                //cout << "if test" << endl;
                 x_coords(c, j) = system.bodies[j].pos[0];
                 y_coords(c, j) = system.bodies[j].pos[1];
                 z_coords(c, j) = system.bodies[j].pos[2];
@@ -89,7 +85,7 @@ void Nbody::velocity_verlet() {
         }
         if (i == c * (int) std::round(N / (double) datapoints)){
             c++;
-            //cout << i / ((double) N) * 100 << " % "<< endl;
+            cout << i / ((double) N) * 100 << " % "<< endl;
         }
     }
 }
@@ -111,7 +107,6 @@ void Nbody::write_pos(string filename, bool binary = false){
 }
 
 void Nbody::write_vel(string filename, bool binary = false){
-    //cout << "write_vel" << endl;
     if (binary == true){
         vx_coords.save("vx_" + filename + ".bin", arma::arma_binary);
         vy_coords.save("vy_" + filename + ".bin", arma::arma_binary);
