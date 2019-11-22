@@ -1,10 +1,18 @@
-
+import sys
 import matplotlib.pyplot as plt
 import numpy as np
 
-x_coords = np.loadtxt("x_coords.txt", skiprows=2)
-y_coords = np.loadtxt("y_coords.txt", skiprows=2)
-z_coords = np.loadtxt("z_coords.txt", skiprows=2)
+filename = "simulation_"
+for index, arg in enumerate(sys.argv[1:]):
+    planets.append(arg)
+    filename += arg
+    if index < len(sys.argv[1:]) - 1:
+        filename += "_"
+
+
+x_coords = np.loadtxt(f"x_{filename}.txt", skiprows=2)
+y_coords = np.loadtxt(f"y_{filename}.txt", skiprows=2)
+z_coords = np.loadtxt(f"z_{filename}.txt", skiprows=2)
 print(x_coords.shape)
 plt.plot(x_coords[:, 0], y_coords[:, 0], "ro")
 plt.plot(x_coords[:, 1], y_coords[:, 1], "b--")
