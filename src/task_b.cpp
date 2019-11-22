@@ -89,13 +89,13 @@ class SolarSystem {
             bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
         }
         infile.close();
-        
+
         update_force_potential();
-        
-        
+
+
     }
     void update_force_potential() {
-            
+
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
             V = 0;
@@ -123,7 +123,7 @@ class Nbody{
     arma::mat vx_coords;
     arma::mat vy_coords;
     arma::mat vz_coords;
-    
+
     arma::mat V_coords;
     arma::mat K_coords;
     arma::mat l_coords;
@@ -228,7 +228,22 @@ class Nbody{
     }
 };
 
-int main(){
+int main(int argc, char* argv[]){
+    string output_filename = "simulation_";
+    string input_filename = "data_";
+    for (int i = 1; i < argc; i++) {
+        output_filename += argv[i];
+        input_filename += argv[i];
+        if (i < argc - 1) {
+            output_filename += "_";
+            input_filename += "_";
+        }
+        else {
+            output_filename += ".txt";
+            input_filename += ".txt";
+        }
+    }
+    cout << input_filename << "  " << output_filename << endl;
     arma::vec pos = arma::zeros(3);
     arma::vec vel = arma::zeros(3);
     double mass = 0;

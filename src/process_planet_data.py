@@ -14,10 +14,14 @@ masses = {
     "Neptune": 102.413e24,
     "Pluto": 1.307e22,
 }
-
+filename = "data_"
 planets = []
 for index, arg in enumerate(sys.argv[1:]):
     planets.append(arg)
+    filename += arg
+    if index < len(sys.argv[1:]) - 1:
+        filename += "_"
+        
 planets_data = np.zeros((len(planets), 8), dtype=object)
 
 for row, planet in enumerate(planets):
@@ -40,5 +44,4 @@ for row, planet in enumerate(planets):
     planets_data[row, :] = np.append(
         np.append(planet, data), masses[planet] / masses["Sun"]
     )
-
-np.savetxt("datafiles/planets_data.txt", planets_data.astype(str), fmt="%s")
+np.savetxt(f"datafiles/{filename}.txt", planets_data.astype(str), fmt="%s")
