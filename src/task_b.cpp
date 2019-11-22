@@ -47,6 +47,10 @@ struct CelestialBody {
     double angular_moment() {
         return std::fabs(arma::norm(arma::cross(pos, vel)));
     }
+
+    double kinetic_energy(){
+        return 0.5 * mass * std::pow(arma::norm(vel), 2);
+    }
 };
 
 class SolarSystem {
@@ -138,11 +142,6 @@ class Nbody{
         N = steps;
         dt = timesteps;
         system = SolarSystem(filename);
-        //bodies = system.bodies;
-        //cout << "jeff" << bodies[0].pos(0) << endl;
-        //bodies[0].pos(0)++;
-        //cout << "jeff" << bodies[0].pos(0) << endl;
-        datapoints = (int) std::round(N/writenr);
         N_bodies = system.bodies.size();
 
         x_coords = arma::zeros(datapoints, N_bodies);
@@ -168,39 +167,63 @@ class Nbody{
                 system.bodies[j].pos += dt * system.bodies[j].vel;
                 system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
                 system.update_force_potential();
-            
-                x_coords(i, j) = system.bodies[j].pos[0];
-                y_coords(i, j) = system.bodies[j].pos[1];
-                z_coords(i, j) = system.bodies[j].pos[2];
 
-                vx_coords(i, j) = system.bodies[j].vel[0];
-                vy_coords(i, j) = system.bodies[j].vel[1];
-                vz_coords(i, j) = system.bodies[j].vel[2];
+                if (i == c * datapoints) {
+                    x_coords(i, j) = system.bodies[j].pos[0];
+                    y_coords(i, j) = system.bodies[j].pos[1];
+                    z_coords(i, j) = system.bodies[j].pos[2];
+                    cout << c << " " << i << endl;
 
-                //vx_coords.save("x_coords.bin", arma_binary);
-                //vy_coords.save("x_coords.bin", arma_binary);
-                //vz_coords.save("x_coords.bin", arma_binary);
+                    vx_coords(i, j) = system.bodies[j].vel[0];
+                    vy_coords(i, j) = system.bodies[j].vel[1];
+                    vz_coords(i, j) = system.bodies[j].vel[2];
 
+                    V_coords(i, j) = system.bodies[j].V;
+                    K_coords(i, j) = system.bodies[j].kinetic_energy();
+                    l_coords(i, j) = system.bodies[j].angular_moment();
+                    c += 1;
+                }   
             }
 
-            /*
-            if (i == c * datapoints) {
-                 write to matrix
-                
-                c += 1;
-            }
-            */
         }
-        x_coords.save("x_coords.txt", arma::arma_ascii);
-        y_coords.save("y_coords.txt", arma::arma_ascii);
-        z_coords.save("z_coords.txt", arma::arma_ascii);
     }
 
-    void write_pos(bool binary = false){
+    void write_pos(string filename, bool binary = false){
         if (binary == true){
-            x_coords.save("x_coords.txt", arma::arma_ascii);
-            y_coords.save("y_coords.txt", arma::arma_ascii);
-            z_coords.save("z_coords.txt", arma::arma_ascii);
+            x_coords.save("x_" + filename + ".bin", arma::arma_binary);
+            y_coords.save("y_" + filename + ".bin", arma::arma_binary);
+            z_coords.save("z_" + filename + ".bin", arma::arma_binary);
+        }
+        else {
+            x_coords.save("x_" + filename + ".txt", arma::arma_ascii);
+            y_coords.save("y_" + filename + ".txt", arma::arma_ascii);
+            z_coords.save("z_" + filename + ".txt", arma::arma_ascii);
+        }
+    }
+
+    void write_vel(string filename, bool binary = false){
+        if (binary == true){
+            vx_coords.save("vx_" + filename + ".bin", arma::arma_binary);
+            vy_coords.save("vy_" + filename + ".bin", arma::arma_binary);
+            vz_coords.save("vz_" + filename + ".bin", arma::arma_binary);
+        }
+        else {
+            vx_coords.save("vx_" + filename + ".txt", arma::arma_ascii);
+            vy_coords.save("vy_" + filename + ".txt", arma::arma_ascii);
+            vz_coords.save("vz_" + filename + ".txt", arma::arma_ascii);
+        }
+    }
+
+    void write_energis_angmom(string filename, bool binary = false){
+        if (binary == true){
+            V_coords.save("V_" + filename + ".bin", arma::arma_binary);
+            K_coords.save("K_" + filename + ".bin", arma::arma_binary);
+            l_coords.save("l_" + filename + ".bin", arma::arma_binary);
+        }
+        else {
+            V_coords.save("V_" + filename + ".txt", arma::arma_ascii);
+            K_coords.save("K_" + filename + ".txt", arma::arma_ascii);
+            l_coords.save("l_" + filename + ".txt", arma::arma_ascii);
         }
     }
 };
@@ -226,8 +249,9 @@ int main(){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(100000, 0.00001, 1, "datafiles/planets_data.txt");
+    Nbody test = Nbody(100000, 0.00001, 2, "datafiles/planets_data.txt");
     test.forward_euler();
+    test.write_pos("coords");
 
     return 0;
 }
