@@ -133,7 +133,6 @@ class Nbody{
     int N_bodies;
     int N;
     double dt;
-    int writenr;
     int datapoints;
     SolarSystem system = SolarSystem();
 
@@ -142,8 +141,9 @@ class Nbody{
         N = steps;
         dt = timesteps;
         system = SolarSystem(filename);
-        datapoints = (int) std::round(N / (double) writenr);
+        datapoints = writenr;
         N_bodies = system.bodies.size();
+
 
         x_coords = arma::zeros(datapoints, N_bodies);
         y_coords = arma::zeros(datapoints, N_bodies);
@@ -159,29 +159,31 @@ class Nbody{
     }
 
     void forward_euler() {
-
         int c = 0;
         for (int i = 0; i < N; i++) {
-        cout << datapoints << " " << N_bodies << endl;
             for (int j = 0; j < N_bodies; j++) {
                 system.bodies[j].pos += dt * system.bodies[j].vel;
                 system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
                 system.update_force_potential();
 
-                if (i == c * datapoints) {
-                    x_coords(i, j) = system.bodies[j].pos[0];
-                    y_coords(i, j) = system.bodies[j].pos[1];
-                    z_coords(i, j) = system.bodies[j].pos[2];
+                if (i == c * (int) std::round(N / (double) datapoints)) {
 
-                    vx_coords(i, j) = system.bodies[j].vel[0];
-                    vy_coords(i, j) = system.bodies[j].vel[1];
-                    vz_coords(i, j) = system.bodies[j].vel[2];
+                    x_coords(c, j) = system.bodies[j].pos[0];
+                    y_coords(c, j) = system.bodies[j].pos[1];
+                    z_coords(c, j) = system.bodies[j].pos[2];
+                    cout << j << " " << N_bodies << endl;
+                    vx_coords(c, j) = system.bodies[j].vel[0];
+                    vy_coords(c, j) = system.bodies[j].vel[1];
+                    vz_coords(c, j) = system.bodies[j].vel[2];
 
-                    V_coords(i, j) = system.bodies[j].V;
-                    K_coords(i, j) = system.bodies[j].kinetic_energy();
-                    l_coords(i, j) = system.bodies[j].angular_moment();
-                    c += 1;
+                    V_coords(c, j) = system.bodies[j].V;
+                    K_coords(c, j) = system.bodies[j].kinetic_energy();
+                    l_coords(c, j) = system.bodies[j].angular_moment();
+
                 }   
+            }
+            if (i == c * (int) std::round(N / (double) datapoints)){
+                c++;
             }
 
         }
@@ -262,7 +264,7 @@ int main(int argc, char* argv[]){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(100000, 0.00001, 2, "datafiles/planets_data.txt");
+    Nbody test = Nbody(100000, 0.00001, 1000, "datafiles/" + input_filename);
     test.forward_euler();
     test.write_pos(output_filename);
 
