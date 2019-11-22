@@ -1,6 +1,9 @@
 #include "CelestialBody.h"
 #include "SolarSystem.h"
 #include "Nbody.h"
+#include <array>
+#include <string>
+
 
 int main(int argc, char* argv[]){
     string output_filename = "simulation_";
@@ -16,7 +19,7 @@ int main(int argc, char* argv[]){
             input_filename += ".txt";
         }
     }
-    cout << input_filename << "  " << output_filename << endl;
+    //cout << input_filename << "  " << output_filename << endl;
     arma::vec pos = arma::zeros(3);
     arma::vec vel = arma::zeros(3);
     double mass = 0;
@@ -36,11 +39,23 @@ int main(int argc, char* argv[]){
     cout << "jeff" << jeff.bodies[0].F << endl;
     cout << "3" << endl;
     */
+    Nbody euler = Nbody();
+    Nbody verlet = Nbody();
+    std::array<int, 8> stepsperYr = {100, 500, 1000, 1500, 2000, 3000 , 4000};
+    string nr;
 
-    Nbody test = Nbody(1.5, 2000, 100, "datafiles/" + input_filename);
-    test.forward_euler();
-    test.write_pos(output_filename);
-            // Nbody(int steps, double timesteps, int writenr, string filename);
+    for (int i=0; i<stepsperYr.array::size(); i++)
+    {   
+        nr = std::to_string(i);
+        cout << nr << endl;
+        euler = Nbody(2, stepsperYr[i], 100, "datafiles/" + input_filename);
+        euler.forward_euler();
+        euler.write_pos(output_filename + "euler" + nr);
+
+        verlet = Nbody(2, stepsperYr[i], 100, "datafiles/" + input_filename);
+        verlet.velocity_verlet();
+        verlet.write_pos(output_filename + "verlet" + nr);
+    }
 
 
     return 0;

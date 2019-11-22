@@ -1,9 +1,13 @@
 #include "Nbody.h"
 
+Nbody::Nbody() {
+
+}
+
 Nbody::Nbody(double years, int NperYr, int writenr, string filename) {
 
         N = (int) std::round(years * NperYr);
-        cout << N << endl;
+        //cout << N << endl;
         dt = 1.0 / (double) NperYr;
         system = SolarSystem(filename);
         datapoints = writenr;
@@ -25,7 +29,7 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename) {
 
 void Nbody::forward_euler() {
     int c = 0;
-    cout << datapoints << " " << N << " " << N_bodies << endl; 
+    //cout << datapoints << " " << N << " " << N_bodies << endl; 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
             system.bodies[j].pos += dt * system.bodies[j].vel;
@@ -37,7 +41,7 @@ void Nbody::forward_euler() {
                 x_coords(c, j) = system.bodies[j].pos[0];
                 y_coords(c, j) = system.bodies[j].pos[1];
                 z_coords(c, j) = system.bodies[j].pos[2];
-                cout << j << " " << N_bodies << endl;
+                //cout << j << " " << N_bodies << endl;
                 vx_coords(c, j) = system.bodies[j].vel[0];
                 vy_coords(c, j) = system.bodies[j].vel[1];
                 vz_coords(c, j) = system.bodies[j].vel[2];
@@ -96,17 +100,17 @@ void Nbody::velocity_verlet() {
 
 void Nbody::write_pos(string filename, bool binary = false){
     if (binary == true){
-        cout << "write_pos if" << endl;
+        //cout << "write_pos if" << endl;
         x_coords.save("x_" + filename + ".bin", arma::arma_binary);
         y_coords.save("y_" + filename + ".bin", arma::arma_binary);
         z_coords.save("z_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        cout << "write_pos else" << endl;
+        //cout << "write_pos else" << endl;
         x_coords.save("x_" + filename + ".txt", arma::arma_ascii);
         y_coords.save("y_" + filename + ".txt", arma::arma_ascii);
         z_coords.save("z_" + filename + ".txt", arma::arma_ascii);
-        x_coords.print();
+        //x_coords.print();
     }
 }
 

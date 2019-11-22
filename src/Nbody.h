@@ -27,7 +27,8 @@ class Nbody{
         SolarSystem system;
 
         Nbody(double years, int NperYr, int writenr, string filename);
-
+        Nbody();
+        
         void forward_euler();
 
         void velocity_verlet();
