@@ -95,7 +95,7 @@ class SolarSystem {
 
     }
     void update_force_potential() {
-
+        cout << "haha" << endl;
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
             V = 0;
@@ -194,7 +194,6 @@ class Nbody{
         for (int i = 0; i < N; i++) {
         cout << datapoints << " " << N_bodies << endl;
             for (int j = 0; j < N_bodies; j++) {
-
                 ai_prev = system.bodies[j].F / system.bodies[j].mass;
                 system.bodies[j].pos += dt * system.bodies[j].vel + 0.5 * dt * dt * ai_prev;
                 system.update_force_potential();
