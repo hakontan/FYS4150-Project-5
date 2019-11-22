@@ -13,6 +13,7 @@ masses = {
     "Uranus": 86.813e24,
     "Neptune": 102.413e24,
     "Pluto": 1.307e22,
+    "Roadster": 1250,
 }
 filename = "data_"
 planets = []

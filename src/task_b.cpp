@@ -95,7 +95,6 @@ class SolarSystem {
 
     }
     void update_force_potential() {
-        cout << "haha" << endl;
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
             V = 0;
@@ -191,32 +190,33 @@ class Nbody{
 
     void velocity_verlet() {
 
-        double ai_prev;
+        arma::vec ai_prev;
         int c = 0;
         for (int i = 0; i < N; i++) {
-        cout << datapoints << " " << N_bodies << endl;
             for (int j = 0; j < N_bodies; j++) {
                 ai_prev = system.bodies[j].F / system.bodies[j].mass;
                 system.bodies[j].pos += dt * system.bodies[j].vel + 0.5 * dt * dt * ai_prev;
                 system.update_force_potential();
-                system.bodies[j].vel += 0.5 * dt * (ai_prev + ystem.bodies[j].F / system.bodies[j].mass);
+                system.bodies[j].vel += 0.5 * dt * (ai_prev + system.bodies[j].F / system.bodies[j].mass);
 
-                if (i == c * datapoints) {
-                    x_coords(i, j) = system.bodies[j].pos[0];
-                    y_coords(i, j) = system.bodies[j].pos[1];
-                    z_coords(i, j) = system.bodies[j].pos[2];
+              
+                if (i == c * (int) std::round(N / (double) datapoints)) {
+                    x_coords(c, j) = system.bodies[j].pos[0];
+                    y_coords(c, j) = system.bodies[j].pos[1];
+                    z_coords(c, j) = system.bodies[j].pos[2];
+                    vx_coords(c, j) = system.bodies[j].vel[0];
+                    vy_coords(c, j) = system.bodies[j].vel[1];
+                    vz_coords(c, j) = system.bodies[j].vel[2];
 
-                    vx_coords(i, j) = system.bodies[j].vel[0];
-                    vy_coords(i, j) = system.bodies[j].vel[1];
-                    vz_coords(i, j) = system.bodies[j].vel[2];
-
-                    V_coords(i, j) = system.bodies[j].V;
-                    K_coords(i, j) = system.bodies[j].kinetic_energy();
-                    l_coords(i, j) = system.bodies[j].angular_moment();
-                    c += 1;
+                    V_coords(c, j) = system.bodies[j].V;
+                    K_coords(c, j) = system.bodies[j].kinetic_energy();
+                    l_coords(c, j) = system.bodies[j].angular_moment();
                 }   
             }
-
+            if (i == c * (int) std::round(N / (double) datapoints)){
+                c++;
+                cout << i / ((double) N) * 100 << " % "<< endl;
+            }
         }
     }
 
@@ -295,8 +295,8 @@ int main(int argc, char* argv[]){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(100000, 0.00001, 1000, "datafiles/" + input_filename);
-    test.forward_euler();
+    Nbody test = Nbody(1e5, 0.0001, 1000, "datafiles/" + input_filename);
+    test.velocity_verlet();
     test.write_pos(output_filename);
 
     return 0;
