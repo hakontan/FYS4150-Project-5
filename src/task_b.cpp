@@ -93,13 +93,13 @@ class SolarSystem {
             bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
         }
         infile.close();
-        
+
         update_force();
-        
-        
+
+
     }
     void update_force() {
-            
+
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
             for(int j=0; j < bodies.size(); j++) {
@@ -112,7 +112,7 @@ class SolarSystem {
                 }
             }
         //out << R(0) << endl;
-        cout << F(0) << endl;    
+        cout << F(0) << endl;
         bodies[i].F = F; //set_force(F);
 
         // F.print();
@@ -191,7 +191,7 @@ class Nbody{
                 //cout << "under" << endl;
                 //bodies[j].F.print();
                 //cout << bodies[j].mass << endl;
-                
+
 
                 x_coords(i, j) = system.bodies[j].pos[0];
                 y_coords(i, j) = system.bodies[j].pos[1];
@@ -210,7 +210,7 @@ class Nbody{
             /*
             if (i == c * datapoints) {
                  write to matrix
-                
+
                 c += 1;
             }
             */
@@ -221,7 +221,22 @@ class Nbody{
     }
 };
 
-int main(){
+int main(int argc, char* argv[]){
+    string output_filename = "simulation_";
+    string input_filename = "data_";
+    for (int i = 1; i < argc; i++) {
+        output_filename += argv[i];
+        input_filename += argv[i];
+        if (i < argc - 1) {
+            output_filename += "_";
+            input_filename += "_";
+        }
+        else {
+            output_filename += ".txt";
+            input_filename += ".txt";
+        }
+    }
+    cout << input_filename << "  " << output_filename << endl;
     arma::vec pos = arma::zeros(3);
     arma::vec vel = arma::zeros(3);
     double mass = 0;
@@ -242,8 +257,8 @@ int main(){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(10000, 0.001, 1,"datafiles/planets_data.txt");
-    test.forward_euler();
+    //Nbody test = Nbody(10000, 0.001, 1,"datafiles/planets_data.txt");
+    //test.forward_euler();
 
     return 0;
 }
