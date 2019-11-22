@@ -15,6 +15,7 @@ using std::string;
 #define PI  3.14159265
 #define M_sun  1.99e30
 #define G (4 * PI * PI)
+#define C 63239.7263
 
 
 struct CelestialBody {

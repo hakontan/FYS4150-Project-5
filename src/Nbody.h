@@ -26,9 +26,13 @@ class Nbody{
         int datapoints;
         SolarSystem system;
 
-        Nbody(double years, int NperYr, int writenr, string filename);
-        Nbody();
-        
+
+        Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta);
+        Nbody(double years, int NperYr, int writenr, string filename, bool einstein) {Nbody(years, NperYr, writenr, filename, einstein, 2);}
+
+        Nbody(double years, int NperYr, int writenr, string filename){Nbody(years, NperYr, writenr, filename, false, 2);}
+
+
         void forward_euler();
 
         void velocity_verlet();
