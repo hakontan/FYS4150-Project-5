@@ -26,7 +26,7 @@ class Nbody{
         int datapoints;
         SolarSystem system;
 
-        Nbody(int steps, double timesteps, int writenr, string filename);
+        Nbody(double years, int NperYr, int writenr, string filename);
 
         void forward_euler();
 

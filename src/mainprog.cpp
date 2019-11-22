@@ -37,8 +37,8 @@ int main(int argc, char* argv[]){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(1e5, 0.0001, 1000, "datafiles/" + input_filename);
-    test.velocity_verlet();
+    Nbody test = Nbody(1.5, 2000, 100, "datafiles/" + input_filename);
+    test.forward_euler();
     test.write_pos(output_filename);
             // Nbody(int steps, double timesteps, int writenr, string filename);
 
