@@ -22,6 +22,7 @@ struct CelestialBody {
     arma::vec pos;
     arma::vec vel;
     arma::vec F;
+    double V;
 
     double mass;
     string name;
@@ -46,17 +47,6 @@ struct CelestialBody {
     double angular_moment() {
         return std::fabs(arma::norm(arma::cross(pos, vel)));
     }
-
-    void set_force(arma::vec F_) {
-        cout << "new" << endl;
-        F_.print();
-        cout << "over" << endl;
-        F.print();
-        F = F_;
-        cout << "under" << endl;
-        F.print();
-    }
-
 };
 
 class SolarSystem {
@@ -64,6 +54,7 @@ class SolarSystem {
     arma::vec R;
     arma::vec F;
     double V;
+    double R_norm;
 
     public:
     std::vector<CelestialBody> bodies;
@@ -95,29 +86,27 @@ class SolarSystem {
         }
         infile.close();
         
-        update_force();
+        update_force_potential();
         
         
     }
-    void update_force() {
+    void update_force_potential() {
             
         for(int i=0; i < bodies.size(); i++) {
             F = arma::zeros(3);
             V = 0;
             for(int j=0; j < bodies.size(); j++) {
                 if(i!=j) {
-                  R = bodies[i].pos - bodies[j].pos;
-                  F += -(G * R * bodies[i].mass * bodies[j].mass)
-                        / std::pow(arma::norm(R), 3);
-                    
+                    R = bodies[i].pos - bodies[j].pos;
+                    R_norm = arma::norm(R);
+                    F += -(G * R * bodies[i].mass * bodies[j].mass)
+                            / std::pow(R_norm, 3);
+                    V += -(G * bodies[j].mass) / R_norm;
                 }
             }
-        cout << F(0) << endl;    
-        bodies[i].F = F; //set_force(F);
-
-        // F.print();
+        bodies[i].F = F;
+        bodies[i].V = V;
         }
-    
     }
 };
 
@@ -130,6 +119,10 @@ class Nbody{
     arma::mat vx_coords;
     arma::mat vy_coords;
     arma::mat vz_coords;
+    
+    arma::mat V_coords;
+    arma::mat K_coords;
+    arma::mat l_coords;
 
     arma::vec a_i = arma::zeros(3);
     std::vector<CelestialBody> bodies;
@@ -159,41 +152,23 @@ class Nbody{
         vx_coords = arma::zeros(datapoints, N_bodies);
         vy_coords = arma::zeros(datapoints, N_bodies);
         vz_coords = arma::zeros(datapoints, N_bodies);
+
+        V_coords = arma::zeros(datapoints, N_bodies);
+        K_coords = arma::zeros(datapoints, N_bodies);
+        l_coords = arma::zeros(datapoints, N_bodies);
     }
 
     void forward_euler() {
-        //double v_prev;
 
         int c = 0;
-        cout << "no" << endl;
-        /*bodies[0].pos[0] = 0;
-        bodies[0].pos[1] = 0;
-        bodies[0].pos[2] = 0;
-        bodies[1].pos[0] = 1;
-        bodies[1].pos[1] = 0;
-        bodies[1].pos[2] = 0;
-
-        bodies[1].vel[1] = 6.28;
-        bodies[1].vel[0] = 0;
-        bodies[1].vel[2] = 0;*/
-        cout << "g" << endl;
         system.bodies[1].pos.print();
 
         for (int i=0; i < N; i++) {
-            //cout << "updating step: " << i << endl;
             for (int j=0; j<N_bodies; j++) {
-                //cout << bodies[j].name << endl;
                 system.bodies[j].pos += dt * system.bodies[j].vel;
-                //cout << bodies[j].pos[0] << endl;
                 system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
-                //cout << "over" << endl;
-                //bodies[j].F.print();
-                system.update_force();
-                //cout << "under" << endl;
-                //bodies[j].F.print();
-                //cout << bodies[j].mass << endl;
-                
-
+                system.update_force_potential();
+            
                 x_coords(i, j) = system.bodies[j].pos[0];
                 y_coords(i, j) = system.bodies[j].pos[1];
                 z_coords(i, j) = system.bodies[j].pos[2];
@@ -220,6 +195,14 @@ class Nbody{
         y_coords.save("y_coords.txt", arma::arma_ascii);
         z_coords.save("z_coords.txt", arma::arma_ascii);
     }
+
+    void write_pos(bool binary = false){
+        if (binary == true){
+            x_coords.save("x_coords.txt", arma::arma_ascii);
+            y_coords.save("y_coords.txt", arma::arma_ascii);
+            z_coords.save("z_coords.txt", arma::arma_ascii);
+        }
+    }
 };
 
 int main(){
@@ -243,7 +226,7 @@ int main(){
     cout << "3" << endl;
     */
 
-    Nbody test = Nbody(10000, 0.001, 1, "datafiles/planets_data.txt");
+    Nbody test = Nbody(100000, 0.00001, 1, "datafiles/planets_data.txt");
     test.forward_euler();
 
     return 0;
