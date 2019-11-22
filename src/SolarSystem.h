@@ -17,7 +17,7 @@ class SolarSystem {
 
         SolarSystem();
         SolarSystem(std::vector<CelestialBody> bodies_);
-        SolarSystem(string filename);
+        SolarSystem(string filename, bool einstein_, double beta);
         void update_force_potential();
         arma::vec calculate_force_newton(double mass_i, double mass_j, double beta);
         arma::vec calculate_force_newton(double mass_i, double mass_j){return calculate_force_newton(mass_i, mass_j, 2);}

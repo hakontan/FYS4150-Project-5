@@ -26,7 +26,12 @@ class Nbody{
         int datapoints;
         SolarSystem system;
 
-        Nbody(double years, int NperYr, int writenr, string filename);
+
+        Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta);
+        Nbody(double years, int NperYr, int writenr, string filename, bool einstein) {Nbody(years, NperYr, writenr, filename, einstein, 3);}
+
+        Nbody(double years, int NperYr, int writenr, string filename){Nbody(years, NperYr, writenr, filename, false, 3);}
+
 
         void forward_euler();
 

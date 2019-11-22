@@ -6,10 +6,13 @@ SolarSystem::SolarSystem() {
 SolarSystem::SolarSystem(std::vector<CelestialBody> bodies_) {
     bodies = bodies_;
 }
-SolarSystem::SolarSystem(string filename) {
+SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
     double x;
     double y;
     double z;
+
+    einstein = einstein_;
+    beta = beta_;
 
     double vx;
     double vy;
