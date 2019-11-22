@@ -142,6 +142,7 @@ class Nbody{
         N = steps;
         dt = timesteps;
         system = SolarSystem(filename);
+        datapoints = (int) std::round(N / (double) writenr);
         N_bodies = system.bodies.size();
 
         x_coords = arma::zeros(datapoints, N_bodies);
@@ -160,10 +161,9 @@ class Nbody{
     void forward_euler() {
 
         int c = 0;
-        system.bodies[1].pos.print();
-
-        for (int i=0; i < N; i++) {
-            for (int j=0; j<N_bodies; j++) {
+        for (int i = 0; i < N; i++) {
+        cout << datapoints << " " << N_bodies << endl;
+            for (int j = 0; j < N_bodies; j++) {
                 system.bodies[j].pos += dt * system.bodies[j].vel;
                 system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
                 system.update_force_potential();
@@ -172,7 +172,6 @@ class Nbody{
                     x_coords(i, j) = system.bodies[j].pos[0];
                     y_coords(i, j) = system.bodies[j].pos[1];
                     z_coords(i, j) = system.bodies[j].pos[2];
-                    cout << c << " " << i << endl;
 
                     vx_coords(i, j) = system.bodies[j].vel[0];
                     vy_coords(i, j) = system.bodies[j].vel[1];
@@ -208,9 +207,9 @@ class Nbody{
             vz_coords.save("vz_" + filename + ".bin", arma::arma_binary);
         }
         else {
-            vx_coords.save("vx_" + filename + ".txt", arma::arma_ascii);
-            vy_coords.save("vy_" + filename + ".txt", arma::arma_ascii);
-            vz_coords.save("vz_" + filename + ".txt", arma::arma_ascii);
+            vx_coords.save("vx_" + filename, arma::arma_ascii);
+            vy_coords.save("vy_" + filename, arma::arma_ascii);
+            vz_coords.save("vz_" + filename, arma::arma_ascii);
         }
     }
 
@@ -221,9 +220,9 @@ class Nbody{
             l_coords.save("l_" + filename + ".bin", arma::arma_binary);
         }
         else {
-            V_coords.save("V_" + filename + ".txt", arma::arma_ascii);
-            K_coords.save("K_" + filename + ".txt", arma::arma_ascii);
-            l_coords.save("l_" + filename + ".txt", arma::arma_ascii);
+            V_coords.save("V_" + filename, arma::arma_ascii);
+            K_coords.save("K_" + filename, arma::arma_ascii);
+            l_coords.save("l_" + filename, arma::arma_ascii);
         }
     }
 };
@@ -266,7 +265,7 @@ int main(int argc, char* argv[]){
 
     Nbody test = Nbody(100000, 0.00001, 2, "datafiles/planets_data.txt");
     test.forward_euler();
-    test.write_pos("coords");
+    test.write_pos(output_filename);
 
     return 0;
 }
