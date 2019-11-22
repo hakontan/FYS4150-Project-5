@@ -43,13 +43,13 @@ void SolarSystem::update_force_potential() {
                 if (einstein) {
                     F += calculate_force_einstein(bodies[i].mass,
                                                   bodies[j].mass,
-                                                  bodies[i].angular_moment(),
+                                                  bodies[i].angular_moment()
                                                   );
                 }
                 else {
                     F += calculate_force_newton(bodies[i].mass,
                                          bodies[j].mass,
-                                         beta,
+                                         beta
                                          );
                 }
                 V += -(G * bodies[j].mass) / R_norm;
@@ -58,19 +58,18 @@ void SolarSystem::update_force_potential() {
     bodies[i].F = F;
     bodies[i].V = V;
     }
+}
 
-    arma::vec SolarSystem::calculate_force_newton(double mass_i,
-                                                  double mass_j,
-                                                  double beta,
-                                                  ) {
-        return -(G * R * mass_i * mass_j) / std::pow(R_norm, beta + 1);
-    }
+arma::vec SolarSystem::calculate_force_newton(double mass_i,
+                                              double mass_j,
+                                              double beta) {
+    return -(G * R * mass_i * mass_j) / std::pow(R_norm, beta + 1);
+}
 
-    arma::vec SolarSystem::calculate_force_einstein(double mass_i,
-                                                    double mass_j,
-                                                    double l,
-                                                    ) {
-        return -(G * R * mass_i * mass_j) / std::pow(R_norm, 3)
-               * (1 + (3 * l * l / (R * R * C * C) ) );
-    }
+arma::vec SolarSystem::calculate_force_einstein(double mass_i,
+                                                double mass_j,
+                                                double l
+                                                ) {
+    return -(G * R * mass_i * mass_j) / std::pow(R_norm, 3)
+            * (1 + (3 * l * l / (R * R * C * C) ) );
 }
