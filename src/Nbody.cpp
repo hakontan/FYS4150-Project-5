@@ -8,13 +8,13 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
         N = (int) std::round(years * NperYr);
         dt = 1.0 / (double) NperYr;
-        cout << dt << endl;
+        //cout << dt << endl;
         system = SolarSystem(filename, einstein, beta);
-        cout << "edgd" << endl;
-        system.bodies[0].pos.print();
+        //cout << "edgd" << endl;
+        //system.bodies[0].pos.print();
         datapoints = writenr;
         N_bodies = system.bodies.size();
-        cout << "bodies " << N_bodies << endl;
+        //cout << "bodies " << N_bodies << endl;
 
 
         x_coords = arma::zeros(datapoints, N_bodies);
@@ -34,20 +34,20 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
 void Nbody::forward_euler() {
     int c = 0;
-    cout << "chedlan" << endl;
-    cout << N_bodies << endl;
-    cout << system.bodies.size() << endl;
-    system.bodies[0].vel.print();
-    //cout << datapoints << " " << N << " " << N_bodies << endl; 
+    //cout << "chedlan" << endl;
+    //cout << N_bodies << endl;
+    //cout << system.bodies.size() << endl;
+    //system.bodies[0].vel.print();
+    //cout << datapoints << " " << N << " " << N_bodies << endl;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
-            cout << "plss" << j << endl;
-            system.bodies[j].vel.print();
-            cout << "JEFF XDDD" << endl;
+            //cout << "plss" << j << endl;
+            //system.bodies[j].vel.print();
+            //cout << "JEFF XDDD" << endl;
             system.bodies[j].pos += dt * system.bodies[j].vel;
-            cout << "jeff" << endl;
+            //cout << "jeff" << endl;
             system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
-            cout << "jedna" << endl;
+            //cout << "jedna" << endl;
             system.update_force_potential();
             system.update_cm();
 
@@ -123,7 +123,7 @@ void Nbody::write_pos(string filename, string directory, bool binary){
         x_coords.save(directory + "x_" + filename + ".bin", arma::arma_binary);
         y_coords.save(directory + "y_" + filename + ".bin", arma::arma_binary);
         z_coords.save(directory + "z_" + filename + ".bin", arma::arma_binary);
-        center_of_mass.save("R_cm_" + filename + ".bin", arma::arma_binary);
+        center_of_mass.save(directory + "R_cm_" + filename + ".bin", arma::arma_binary);
     }
     else {
         //cout << "write_pos else" << endl;
@@ -131,7 +131,7 @@ void Nbody::write_pos(string filename, string directory, bool binary){
         y_coords.save(directory + "y_" + filename + ".txt", arma::arma_ascii);
         z_coords.save(directory + "z_" + filename + ".txt", arma::arma_ascii);
         //x_coords.print();
-        center_of_mass.save("R_cm_" + filename + ".txt", arma::arma_ascii);
+        center_of_mass.save(directory + "R_cm_" + filename + ".txt", arma::arma_ascii);
     }
 }
 
