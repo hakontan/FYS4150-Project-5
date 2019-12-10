@@ -51,12 +51,12 @@ int main(int argc, char* argv[]){
 
     Nbody energy_verlet = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
     energy_verlet.velocity_verlet();
-    energy_verlet.write_energis_angmom("energy_verlet.txt", directory);
+    energy_verlet.write_energis_angmom("energy_verlet", directory);
 
 
     Nbody energy_euler = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
     energy_euler.forward_euler();
-    energy_euler.write_energis_angmom("energy_euler.txt", directory);
+    energy_euler.write_energis_angmom("energy_euler", directory);
 
 
     return 0;
