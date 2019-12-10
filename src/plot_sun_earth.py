@@ -36,3 +36,4 @@ ax.legend(loc = 0)
 ax.set_xlim([1.5 * np.min(x_coords[:, -1]), 1.5 * np.max(x_coords[:, -1])])    
 ax.set_ylim([1.5 * np.min(x_coords[:, -1]), 1.5 * np.max(x_coords[:, -1])])
 plt.show()
+

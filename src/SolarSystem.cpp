@@ -19,7 +19,12 @@ SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
     double vz;
 
 
+    arma::vec R_cm = arma::zeros(3);
+    arma::vec V_cm = arma::zeros(3);
+
     double m;
+    double total_mass;
+
     string name;
 
     std::ifstream infile(filename);
@@ -37,7 +42,7 @@ void SolarSystem::update_force_potential() {
         F = arma::zeros(3);
         V = 0;
 
-        for(int j=0; j < bodies.size(); j++) {
+        for(int j = 0; j < bodies.size(); j++) {
             if(i!=j) {
                 R = bodies[i].pos - bodies[j].pos;
 
@@ -45,7 +50,7 @@ void SolarSystem::update_force_potential() {
                 if (einstein) {
                     F += calculate_force_einstein(bodies[i].mass,
                                                   bodies[j].mass,
-                                                  bodies[i].angular_moment()
+                                                  bodies[i].angular_moment(R_cm, V_cm)
                                                   );
                 }
                 else {
@@ -54,12 +59,25 @@ void SolarSystem::update_force_potential() {
                                          beta
                                          );
                 }
-                V += -(G * bodies[j].mass) / R_norm;
+                V += -(G * bodies[i].mass * bodies[j].mass) / R_norm;
             }
         }
     bodies[i].F = F;
     bodies[i].V = V;
     }
+}
+
+void SolarSystem::update_cm() {
+    R_cm = arma::zeros(3);
+    V_cm = arma::zeros(3);
+    total_mass = 0;
+    for(int i = 0; i < bodies.size(); i++) {
+        total_mass += bodies[i].mass;
+        R_cm += bodies[i].pos * bodies[i].mass;
+        V_cm += bodies[i].vel * bodies[i].mass;
+        }
+    R_cm /= total_mass;
+    V_cm /= total_mass;
 }
 
 arma::vec SolarSystem::calculate_force_newton(double mass_i,

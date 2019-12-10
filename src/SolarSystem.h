@@ -14,14 +14,19 @@ class SolarSystem {
         std::vector<CelestialBody> bodies;
         double beta;
         bool einstein;
+        double total_mass;
+        
+        arma::vec R_cm;
+        arma::vec V_cm;
+
 
         SolarSystem();
         SolarSystem(std::vector<CelestialBody> bodies_);
         SolarSystem(string filename, bool einstein_, double beta);
         void update_force_potential();
+        void update_cm();
         arma::vec calculate_force_newton(double mass_i, double mass_j, double beta);
         arma::vec calculate_force_newton(double mass_i, double mass_j){return calculate_force_newton(mass_i, mass_j, 2);}
-
         arma::vec calculate_force_einstein(double mass_i, double mass_j, double l);
 
 };

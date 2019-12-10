@@ -16,10 +16,10 @@ CelestialBody::CelestialBody(double x,
         name = name_;
     }
 
-double CelestialBody::angular_moment() {
-    return std::fabs(arma::norm(arma::cross(pos, vel)));
+double CelestialBody::angular_moment(arma::vec R_cm, arma::vec V_cm) {
+    return std::fabs(arma::norm(arma::cross(pos - R_cm, vel - V_cm)));
 }
 
-double CelestialBody::kinetic_energy(){
-    return 0.5 * mass * std::pow(arma::norm(vel), 2);
+double CelestialBody::kinetic_energy(arma::vec V_cm){
+    return 0.5 * mass * std::pow(arma::norm(vel - V_cm), 2);
 }

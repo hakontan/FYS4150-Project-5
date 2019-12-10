@@ -30,6 +30,7 @@ void Nbody::forward_euler() {
             system.bodies[j].pos += dt * system.bodies[j].vel;
             system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
             system.update_force_potential();
+            system.update_cm();
 
             if (i == c * (int) std::round(N / (double) datapoints)) {
 
@@ -41,8 +42,8 @@ void Nbody::forward_euler() {
                 vz_coords(c, j) = system.bodies[j].vel[2];
 
                 V_coords(c, j+1) = system.bodies[j].V;
-                K_coords(c, j+1) = system.bodies[j].kinetic_energy();
-                l_coords(c, j+1) = system.bodies[j].angular_moment();
+                K_coords(c, j+1) = system.bodies[j].kinetic_energy(system.V_cm);
+                l_coords(c, j+1) = system.bodies[j].angular_moment(system.R_cm, system.V_cm);
                 V_coords(c, 0) += dt * i;
                 K_coords(c, 0) += dt * i;
                 l_coords(c, 0) += dt * i;
@@ -66,6 +67,7 @@ void Nbody::velocity_verlet() {
             system.update_force_potential();
 
             system.bodies[j].vel += 0.5 * dt * (ai_prev + system.bodies[j].F / system.bodies[j].mass);
+            system.update_cm();
 
             if (i == c * (int) std::round(N / (double) datapoints)) {
                 x_coords(c, j) = system.bodies[j].pos[0];
@@ -76,8 +78,8 @@ void Nbody::velocity_verlet() {
                 vz_coords(c, j) = system.bodies[j].vel[2];
 
                 V_coords(c, j+1) = system.bodies[j].V;
-                K_coords(c, j+1) = system.bodies[j].kinetic_energy();
-                l_coords(c, j+1) = system.bodies[j].angular_moment();
+                K_coords(c, j+1) = system.bodies[j].kinetic_energy(system.V_cm);
+                l_coords(c, j+1) = system.bodies[j].angular_moment(system.R_cm, system.V_cm);
                 V_coords(c, 0) += dt * i;
                 K_coords(c, 0) += dt * i;
                 l_coords(c, 0) += dt * i;

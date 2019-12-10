@@ -37,9 +37,9 @@ struct CelestialBody {
                       string name_);
 
 
-        double angular_moment();
+        double angular_moment(arma::vec R_cm, arma::vec V_cm);
 
-        double kinetic_energy();
+        double kinetic_energy(arma::vec V_cm);
 };
 
 #endif

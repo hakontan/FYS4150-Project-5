@@ -36,7 +36,7 @@ class Nbody{
         void forward_euler();
 
         void velocity_verlet();
-
+        
         void write_pos(string filename, bool binary);
         void write_pos(string filename){write_pos(filename, false);}
 
