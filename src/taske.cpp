@@ -36,35 +36,25 @@ int main(int argc, char* argv[]){
     cout << "jeff" << jeff.bodies[0].F << endl;
     cout << "3" << endl;
     */
+    int Nyr = 15;
+    int NperYr = 50000;
+    int writenr = 1e4;
 
+    Nbody Jupiter1 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter.txt", false, 2);
 
-    Nbody euler = Nbody();
-    Nbody verlet = Nbody();
-    std::array<int, 8> stepsperYr = {100, 500, 1000, 1500, 2000, 3000 , 4000};
-    string nr;
+    Jupiter1.velocity_verlet();
+    Jupiter1.write_pos("SunEarthJupiter");
+    
+    Nbody Jupiter10 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter10.txt", false, 2);
 
-    for (int i=0; i<stepsperYr.array::size(); i++)
-    {   
-        nr = std::to_string(i);
-        cout << nr << endl;
-        euler = Nbody(2, stepsperYr[i], 100, "datafiles/" + input_filename);
-        euler.forward_euler();
-        euler.write_pos(output_filename + "euler" + nr);
+    Jupiter10.velocity_verlet();
+    Jupiter10.write_pos("SunEarthJupiter10");
+    
+    Nbody Jupiter1000 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter1000.txt", false, 2);
 
-        verlet = Nbody(2, stepsperYr[i], 100, "datafiles/" + input_filename);
-        verlet.velocity_verlet();
-        verlet.write_pos(output_filename + "verlet" + nr);
-    }
-    /*
-    Nbody energy_euler = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
+    Jupiter1000.velocity_verlet();
+    Jupiter1000.write_pos("SunEarthJupiter1000");
+    
 
-    energy_euler.forward_euler();
-    energy_euler.write_energis_angmom("energy_euler.txt");
-
-    Nbody energy_verlet = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
-
-    energy_verlet.velocity_verlet();
-    energy_verlet.write_energis_angmom("energy_verlet.txt");
-    */
     return 0;
 }

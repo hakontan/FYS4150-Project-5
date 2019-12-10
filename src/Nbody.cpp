@@ -1,5 +1,7 @@
 #include "Nbody.h"
 
+Nbody::Nbody(){}
+
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
 
         N = (int) std::round(years * NperYr);
@@ -12,6 +14,7 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
         x_coords = arma::zeros(datapoints, N_bodies);
         y_coords = arma::zeros(datapoints, N_bodies);
         z_coords = arma::zeros(datapoints, N_bodies);
+        center_of_mass = arma::zeros(datapoints, 3);
 
         vx_coords = arma::zeros(datapoints, N_bodies);
         vy_coords = arma::zeros(datapoints, N_bodies);
@@ -25,6 +28,7 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
 void Nbody::forward_euler() {
     int c = 0;
+    cout << "jeff " <<  N_bodies << endl;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
             system.bodies[j].pos += dt * system.bodies[j].vel;
@@ -47,6 +51,9 @@ void Nbody::forward_euler() {
                 V_coords(c, 0) += dt * i;
                 K_coords(c, 0) += dt * i;
                 l_coords(c, 0) += dt * i;
+                center_of_mass(c, 0) = system.R_cm(0);
+                center_of_mass(c, 1) = system.R_cm(1);
+                center_of_mass(c, 2) = system.R_cm(2);
             }
         }
         if (i == c * (int) std::round(N / (double) datapoints)){
@@ -83,6 +90,9 @@ void Nbody::velocity_verlet() {
                 V_coords(c, 0) += dt * i;
                 K_coords(c, 0) += dt * i;
                 l_coords(c, 0) += dt * i;
+                center_of_mass(c, 0) = system.R_cm(0);
+                center_of_mass(c, 1) = system.R_cm(1);
+                center_of_mass(c, 2) = system.R_cm(2);
             }
         }
         if (i == c * (int) std::round(N / (double) datapoints)){
@@ -98,13 +108,14 @@ void Nbody::write_pos(string filename, bool binary = false){
         x_coords.save("x_" + filename + ".bin", arma::arma_binary);
         y_coords.save("y_" + filename + ".bin", arma::arma_binary);
         z_coords.save("z_" + filename + ".bin", arma::arma_binary);
+        center_of_mass.save("R_cm_" + filename + ".bin", arma::arma_binary);
     }
     else {
         cout << "write_pos else" << endl;
         x_coords.save("x_" + filename + ".txt", arma::arma_ascii);
         y_coords.save("y_" + filename + ".txt", arma::arma_ascii);
         z_coords.save("z_" + filename + ".txt", arma::arma_ascii);
-        x_coords.print();
+        center_of_mass.save("R_cm_" + filename + ".txt", arma::arma_ascii);
     }
 }
 

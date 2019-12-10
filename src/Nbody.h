@@ -9,6 +9,7 @@ class Nbody{
         arma::mat x_coords;
         arma::mat y_coords;
         arma::mat z_coords;
+        arma::mat center_of_mass;
 
         arma::mat vx_coords;
         arma::mat vy_coords;
@@ -26,7 +27,7 @@ class Nbody{
         int datapoints;
         SolarSystem system;
 
-
+        Nbody();
         Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta);
         Nbody(double years, int NperYr, int writenr, string filename, bool einstein) {Nbody(years, NperYr, writenr, filename, einstein, 2);}
 
