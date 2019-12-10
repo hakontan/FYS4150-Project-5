@@ -19,32 +19,29 @@ class Nbody{
         arma::mat l_coords;
 
         arma::vec ai_prev = arma::zeros(3);
-        std::vector<CelestialBody> bodies;
+        //std::vector<CelestialBody> bodies;
         int N_bodies;
         int N;
         double dt;
         int datapoints;
         SolarSystem system;
 
-
-        Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta);
-        Nbody(double years, int NperYr, int writenr, string filename, bool einstein) {Nbody(years, NperYr, writenr, filename, einstein, 2);}
-
-        Nbody(double years, int NperYr, int writenr, string filename){Nbody(years, NperYr, writenr, filename, false, 2);}
+        Nbody();
+        Nbody(double years, int NperYr, int writenr, string filename, bool einstein=false, double beta=2);
 
 
         void forward_euler();
 
         void velocity_verlet();
 
-        void write_pos(string filename, bool binary);
-        void write_pos(string filename){write_pos(filename, false);}
+        void write_pos(string filename, string directory = "", bool binary = false);
+        //void write_pos(string filename){write_pos(filename, false);}
 
-        void write_vel(string filename, bool binary);
-        void write_vel(string filename){write_vel(filename, false);}
+        void write_vel(string filename, string directory = "", bool binary = false);
+        //void write_vel(string filename){write_vel(filename, false);}
 
-        void write_energis_angmom(string filename, bool binary);
-        void write_energis_angmom(string filename){write_energis_angmom(filename, false);}
+        void write_energis_angmom(string filename, string directory = "", bool binary = false);
+        //void write_energis_angmom(string filename){write_energis_angmom(filename, false);}
 };
 
 #endif

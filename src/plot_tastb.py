@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-filename_verlet = "simulation_sunearth_custom1verlet"
-filename_euler =  "simulation_sunearth_custom1euler"
+filename_verlet = "simulation_Sun_Earthverlet"
+filename_euler =  "simulation_Sun_Eartheuler"
 
 years = 2
 stepsperYr = np.array([100, 500, 1000, 1500, 2000, 3000, 4000])
@@ -24,13 +24,13 @@ euler_r = []
 fig, ax = plt.subplots()
 for i in range(7):
     #print(i)
-    x_coords_verlet = np.loadtxt(f"x_{filename_verlet}{i}.txt", skiprows=2)
-    y_coords_verlet = np.loadtxt(f"y_{filename_verlet}{i}.txt", skiprows=2)
-    z_coords_verlet = np.loadtxt(f"z_{filename_verlet}{i}.txt", skiprows=2)
+    x_coords_verlet = np.loadtxt(f"datafiles/filestaskc/x_{filename_verlet}{i}.txt", skiprows=2)
+    y_coords_verlet = np.loadtxt(f"datafiles/filestaskc/y_{filename_verlet}{i}.txt", skiprows=2)
+    z_coords_verlet = np.loadtxt(f"datafiles/filestaskc/z_{filename_verlet}{i}.txt", skiprows=2)
 
-    x_coords_euler = np.loadtxt(f"x_{filename_euler}{i}.txt", skiprows=2)
-    y_coords_euler = np.loadtxt(f"y_{filename_euler}{i}.txt", skiprows=2)
-    z_coords_euler = np.loadtxt(f"z_{filename_euler}{i}.txt", skiprows=2)
+    x_coords_euler = np.loadtxt(f"datafiles/filestaskc/x_{filename_euler}{i}.txt", skiprows=2)
+    y_coords_euler = np.loadtxt(f"datafiles/filestaskc/y_{filename_euler}{i}.txt", skiprows=2)
+    z_coords_euler = np.loadtxt(f"datafiles/filestaskc/z_{filename_euler}{i}.txt", skiprows=2)
 
 
     a_verlet = x_coords_verlet[np.where(np.logical_and(x_coords_verlet[:, 1] > 0, y_coords_verlet[:, 1] <  0)), 1]

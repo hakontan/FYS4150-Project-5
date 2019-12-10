@@ -9,7 +9,7 @@ CelestialBody::CelestialBody(double x,
                   double m,
                   string name_) {
         pos = {x, y, z};
-
+        pos.print();
         vel = {vx, vy, vz};
 
         mass = m;

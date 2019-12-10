@@ -4,6 +4,7 @@ SolarSystem::SolarSystem() {
 
 }
 SolarSystem::SolarSystem(std::vector<CelestialBody> bodies_) {
+    cout << "create bodeies" << endl;
     bodies = bodies_;
 }
 SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
@@ -18,15 +19,16 @@ SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
     double vy;
     double vz;
 
-
+    
     double m;
     string name;
 
     std::ifstream infile(filename);
     while (infile >> name >> x >> y >> z >> vx >> vy >> vz >> m)
     {
-
+        cout << "bodies pushback" << endl;
         bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
+        bodies[0].pos.print();
     }
     infile.close();
     update_force_potential();
