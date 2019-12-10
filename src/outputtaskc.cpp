@@ -36,8 +36,8 @@ int main(int argc, char* argv[]){
     for (int i=0; i<stepsperYr.array::size(); i++)
     {   
         nr = std::to_string(i);
-        cout << nr << endl;
-        euler = Nbody(2, stepsperYr[i], 100, "datafiles/" + input_filename);
+        cout << nr << endl;"datafiles/" + input_filename)
+        euler = Nbody(2, stepsperYr[i], 100, ;
         cout << "before euler" << endl;
         euler.forward_euler();
         euler.write_pos(output_filename + "euler" + nr, directory);
