@@ -15,7 +15,6 @@ sun_init_y = 0.0
 earth_init_x = 0.99999697
 earth_init_y = 0.0
 
-fig, ax = plt.subplots()
 
 
 verlet_r = []

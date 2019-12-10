@@ -3,6 +3,7 @@
 #include "Nbody.h"
 #include <array>
 #include <string>
+#include <ctime>
 
 
 int main(int argc, char* argv[]){
@@ -47,17 +48,29 @@ int main(int argc, char* argv[]){
     }
 
 
+    std::clock_t t_start_verlet = std::clock();
 
-    Nbody energy_verlet = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
+    Nbody energy_verlet = Nbody(200, 100000, 2e5, "datafiles/" + input_filename, false, 2);
     energy_verlet.velocity_verlet();
     energy_verlet.write_energis_angmom("energy_verlet", directory);
 
+    std::clock_t t_end_verlet = std::clock();
+    double time_verlet = 1000.0 * (t_end_verlet - t_start_verlet) / CLOCKS_PER_SEC;
 
-    Nbody energy_euler = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
+
+
+    std::clock_t t_start_euler = std::clock();
+
+
+    Nbody energy_euler = Nbody(200, 100000, 2e5, "datafiles/" + input_filename, false, 2);
     energy_euler.forward_euler();
     energy_euler.write_energis_angmom("energy_euler", directory);
-    cout << input_filename << "  " << output_filename << endl;
 
+    std::clock_t t_end_euler = std::clock();
+    double time_euler = 1000.0 * (t_end_euler - t_start_euler) / CLOCKS_PER_SEC;
+
+    cout << "Time taken Verlet: " << time_verlet / 1000.0 << endl;
+    cout << "Time taken Euler: " << time_euler / 1000.0 << endl;
 
     return 0;
 }

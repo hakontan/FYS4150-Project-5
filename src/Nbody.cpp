@@ -152,9 +152,9 @@ void Nbody::write_vel(string filename, string directory, bool binary){
         vz_coords.save(directory + "vz_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        vx_coords.save(directory + "vx_" + filename, arma::arma_ascii);
-        vy_coords.save(directory + "vy_" + filename, arma::arma_ascii);
-        vz_coords.save(directory + "vz_" + filename, arma::arma_ascii);
+        vx_coords.save(directory + "vx_" + filename + ".txt", arma::arma_ascii);
+        vy_coords.save(directory + "vy_" + filename + ".txt", arma::arma_ascii);
+        vz_coords.save(directory + "vz_" + filename + ".txt", arma::arma_ascii);
     }
 }
 
