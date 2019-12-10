@@ -1,14 +1,20 @@
 #include "Nbody.h"
 
-Nbody::Nbody(){}
+Nbody::Nbody() {
+
+}
 
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
 
         N = (int) std::round(years * NperYr);
         dt = 1.0 / (double) NperYr;
+        cout << dt << endl;
         system = SolarSystem(filename, einstein, beta);
+        cout << "edgd" << endl;
+        system.bodies[0].pos.print();
         datapoints = writenr;
         N_bodies = system.bodies.size();
+        cout << "bodies " << N_bodies << endl;
 
 
         x_coords = arma::zeros(datapoints, N_bodies);
@@ -28,11 +34,20 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
 void Nbody::forward_euler() {
     int c = 0;
-    cout << "jeff " <<  N_bodies << endl;
+    cout << "chedlan" << endl;
+    cout << N_bodies << endl;
+    cout << system.bodies.size() << endl;
+    system.bodies[0].vel.print();
+    //cout << datapoints << " " << N << " " << N_bodies << endl; 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
+            cout << "plss" << j << endl;
+            system.bodies[j].vel.print();
+            cout << "JEFF XDDD" << endl;
             system.bodies[j].pos += dt * system.bodies[j].vel;
+            cout << "jeff" << endl;
             system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
+            cout << "jedna" << endl;
             system.update_force_potential();
             system.update_cm();
 
@@ -102,45 +117,47 @@ void Nbody::velocity_verlet() {
     }
 }
 
-void Nbody::write_pos(string filename, bool binary = false){
+void Nbody::write_pos(string filename, string directory, bool binary){
     if (binary == true){
-        cout << "write_pos if" << endl;
-        x_coords.save("x_" + filename + ".bin", arma::arma_binary);
-        y_coords.save("y_" + filename + ".bin", arma::arma_binary);
-        z_coords.save("z_" + filename + ".bin", arma::arma_binary);
+        //cout << "write_pos if" << endl;
+        x_coords.save(directory + "x_" + filename + ".bin", arma::arma_binary);
+        y_coords.save(directory + "y_" + filename + ".bin", arma::arma_binary);
+        z_coords.save(directory + "z_" + filename + ".bin", arma::arma_binary);
         center_of_mass.save("R_cm_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        cout << "write_pos else" << endl;
-        x_coords.save("x_" + filename + ".txt", arma::arma_ascii);
-        y_coords.save("y_" + filename + ".txt", arma::arma_ascii);
-        z_coords.save("z_" + filename + ".txt", arma::arma_ascii);
+        //cout << "write_pos else" << endl;
+        x_coords.save(directory + "x_" + filename + ".txt", arma::arma_ascii);
+        y_coords.save(directory + "y_" + filename + ".txt", arma::arma_ascii);
+        z_coords.save(directory + "z_" + filename + ".txt", arma::arma_ascii);
+        //x_coords.print();
         center_of_mass.save("R_cm_" + filename + ".txt", arma::arma_ascii);
     }
 }
 
-void Nbody::write_vel(string filename, bool binary = false){
+void Nbody::write_vel(string filename, string directory, bool binary){
+    //cout << "write_vel" << endl;
     if (binary == true){
-        vx_coords.save("vx_" + filename + ".bin", arma::arma_binary);
-        vy_coords.save("vy_" + filename + ".bin", arma::arma_binary);
-        vz_coords.save("vz_" + filename + ".bin", arma::arma_binary);
+        vx_coords.save(directory + "vx_" + filename + ".bin", arma::arma_binary);
+        vy_coords.save(directory + "vy_" + filename + ".bin", arma::arma_binary);
+        vz_coords.save(directory + "vz_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        vx_coords.save("vx_" + filename, arma::arma_ascii);
-        vy_coords.save("vy_" + filename, arma::arma_ascii);
-        vz_coords.save("vz_" + filename, arma::arma_ascii);
+        vx_coords.save(directory + "vx_" + filename, arma::arma_ascii);
+        vy_coords.save(directory + "vy_" + filename, arma::arma_ascii);
+        vz_coords.save(directory + "vz_" + filename, arma::arma_ascii);
     }
 }
 
-void Nbody::write_energis_angmom(string filename, bool binary = false){
+void Nbody::write_energis_angmom(string filename, string directory, bool binary){
     if (binary == true){
-        V_coords.save("V_" + filename + ".bin", arma::arma_binary);
-        K_coords.save("K_" + filename + ".bin", arma::arma_binary);
-        l_coords.save("l_" + filename + ".bin", arma::arma_binary);
+        V_coords.save(directory + "V_" + filename + ".bin", arma::arma_binary);
+        K_coords.save(directory + "K_" + filename + ".bin", arma::arma_binary);
+        l_coords.save(directory + "l_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        V_coords.save("V_" + filename, arma::arma_ascii);
-        K_coords.save("K_" + filename, arma::arma_ascii);
-        l_coords.save("l_" + filename, arma::arma_ascii);
+        V_coords.save(directory + "V_" + filename, arma::arma_ascii);
+        K_coords.save(directory + "K_" + filename, arma::arma_ascii);
+        l_coords.save(directory + "l_" + filename, arma::arma_ascii);
     }
 }
