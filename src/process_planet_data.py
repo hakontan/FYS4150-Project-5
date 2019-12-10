@@ -22,7 +22,7 @@ for index, arg in enumerate(sys.argv[1:]):
     filename += arg
     if index < len(sys.argv[1:]) - 1:
         filename += "_"
-        
+
 planets_data = np.zeros((len(planets), 8), dtype=object)
 
 for row, planet in enumerate(planets):

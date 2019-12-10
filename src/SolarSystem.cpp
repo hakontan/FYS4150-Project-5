@@ -4,7 +4,7 @@ SolarSystem::SolarSystem() {
 
 }
 SolarSystem::SolarSystem(std::vector<CelestialBody> bodies_) {
-    cout << "create bodeies" << endl;
+    //cout << "create bodeies" << endl;
     bodies = bodies_;
 }
 SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
@@ -31,9 +31,9 @@ SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
     std::ifstream infile(filename);
     while (infile >> name >> x >> y >> z >> vx >> vy >> vz >> m)
     {
-        cout << "bodies pushback" << endl;
+        //cout << "bodies pushback" << endl;
         bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
-        bodies[0].pos.print();
+        //bodies[0].pos.print();
     }
     infile.close();
     update_force_potential();
@@ -92,7 +92,7 @@ arma::vec SolarSystem::calculate_force_einstein(double mass_i,
                                                 double mass_j,
                                                 double l
                                                 ) {
-    cout << "jeff" << endl;
+    //cout << "jeff" << endl;
     return -(G * R * mass_i * mass_j) / std::pow(R_norm, 3)
             * (1 + (3 * l * l / (R_norm * R_norm * C * C) ) );
 }
