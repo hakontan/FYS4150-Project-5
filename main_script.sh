@@ -10,6 +10,13 @@ then
   make
 fi
 
+echo "Process data? (y/n)"
+read yn
+if [ "$yn" == "y" ]
+then
+  python process_planet_data.py Sun Earth Jupiter
+fi
+
 echo "Generate results task c? (y/n)"
 read yn
 if [ "$yn" == "y" ]
@@ -21,8 +28,8 @@ echo "Run tests? (y/n)"
 read yn
 if [ "$yn" == "y" ]
 then
-  pytest
-fi  
+  pytest -v
+fi
 
 
 echo "Compile report? (y/n)"
