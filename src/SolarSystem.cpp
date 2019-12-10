@@ -20,26 +20,27 @@ SolarSystem::SolarSystem(string filename, bool einstein_, double beta_) {
     double vz;
 
 
-    arma::vec R_cm = arma::zeros(3);
-    arma::vec V_cm = arma::zeros(3);
+    R_cm = arma::zeros(3);
+    V_cm = arma::zeros(3);
 
     double m;
-    double total_mass;
 
     string name;
 
     std::ifstream infile(filename);
     while (infile >> name >> x >> y >> z >> vx >> vy >> vz >> m)
     {
-        //cout << "bodies pushback" << endl;
         bodies.push_back(CelestialBody(x, y, z, vx, vy, vz, m, name));
         //bodies[0].pos.print();
     }
+        //cout << "bodies pushback" << endl;
     infile.close();
     update_force_potential();
+
 }
 
 void SolarSystem::update_force_potential() {
+
     for(int i=0; i < bodies.size(); i++) {
         F = arma::zeros(3);
         V = 0;

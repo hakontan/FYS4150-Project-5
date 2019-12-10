@@ -15,17 +15,18 @@ ax = fig.add_subplot(111, projection = '3d')
 for i in range(len(x[0, :])):
     ax.plot(x[:, i] - R_cm[:, 0], y[:, i] - R_cm[:, 1], z[:, i] - R_cm[:, 2])
 
-ax.legend(labels)
+ax.legend(labels, loc = 2)
 ax.set_xlabel(r"$x$ [AU]")
 ax.set_ylabel(r"$y$ [AU]")
 ax.set_zlabel(r"$z$ [AU]")
+
 
 fig.savefig("../doc/Figures/OuterSolarSystem.pdf", dpi = 1000)
 
 ax.set_xlim([1.5 * np.min(x[:, -1]), 1.5 * np.max(x[:, -1])])    
 ax.set_ylim([1.5 * np.min(x[:, -1]), 1.5 * np.max(x[:, -1])])
-ax.set_zlim([1.5 * np.min(z[:, -1]), 1.5 * np.max(z[:, -1])])
+ax.set_zlim([-3, 3])
 
-fig.savefig("../doc/Figures/OuterSolarSystem.pdf", dpi = 1000)
+fig.savefig("../doc/Figures/InnerSolarSystem.pdf", dpi = 1000)
 
 plt.show()
