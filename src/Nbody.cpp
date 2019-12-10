@@ -143,9 +143,9 @@ void Nbody::write_vel(string filename, string directory, bool binary){
         vz_coords.save(directory + "vz_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        vx_coords.save(directory + "vx_" + filename, arma::arma_ascii);
-        vy_coords.save(directory + "vy_" + filename, arma::arma_ascii);
-        vz_coords.save(directory + "vz_" + filename, arma::arma_ascii);
+        vx_coords.save(directory + "vx_" + filename + ".txt", arma::arma_ascii);
+        vy_coords.save(directory + "vy_" + filename + ".txt", arma::arma_ascii);
+        vz_coords.save(directory + "vz_" + filename + ".txt", arma::arma_ascii);
     }
 }
 
@@ -156,8 +156,8 @@ void Nbody::write_energis_angmom(string filename, string directory, bool binary)
         l_coords.save(directory + "l_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        V_coords.save(directory + "V_" + filename, arma::arma_ascii);
-        K_coords.save(directory + "K_" + filename, arma::arma_ascii);
-        l_coords.save(directory + "l_" + filename, arma::arma_ascii);
+        V_coords.save(directory + "V_" + filename + ".txt", arma::arma_ascii);
+        K_coords.save(directory + "K_" + filename + ".txt", arma::arma_ascii);
+        l_coords.save(directory + "l_" + filename + ".txt", arma::arma_ascii);
     }
 }
