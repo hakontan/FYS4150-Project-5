@@ -31,6 +31,26 @@ then
   pytest -v
 fi
 
+echo "Generate results task d? (y/n)"
+read yn
+if [ "$yn" == "y" ]
+then
+  ./outputtaskd.out
+fi
+
+echo "Generate results task e? (y/n)"
+read yn
+if [ "$yn" == "y" ]
+then
+  ./outputtaske.out
+fi
+
+echo "Generate results task f? (y/n)"
+read yn
+if [ "$yn" == "y" ]
+then
+  ./outputtaskf.out 
+fi
 
 echo "Compile report? (y/n)"
 read yn
