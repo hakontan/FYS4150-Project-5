@@ -23,10 +23,13 @@ int main(int argc, char* argv[]){
 
     Nbody MercuryNewton = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
 
-    SolarSystem.velocity_verlet();
-    SolarSystem.write_pos("SolarSystem");
+    MercuryNewton.velocity_verlet();
+    MercuryNewton.write_pos("MercuryNewton");
 
-    Nbody MercuryNewton = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
+    Nbody MercuryEinstein = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
     
+    MercuryEinstein.velocity_verlet();
+    MercuryEinstein.write_pos("MercuryEinstein");
+
     return 0;
 }
