@@ -23,23 +23,8 @@ int main(int argc, char* argv[]){
     //cout << input_filename << "  " << output_filename << endl;
     arma::vec pos = arma::zeros(3);
     arma::vec vel = arma::zeros(3);
-    double mass = 0;
-    string nam = "jeff";
-    //CelestialBody jupiter = CelestialBody(0, 0, 0, 0, 0, 0, 0, nam);
-    //cout << jupiter.mass << endl;
-    //cout << jupiter.name << endl;
-    //jupiter.pos.print();
 
-    //std::vector<CelestialBody> planets = {jupiter};
-    /*
-    SolarSystem test_system = SolarSystem(planets);
-    cout << test_system.bodies[0].name << endl;
-    cout << "1" << endl;
-    SolarSystem jeff = SolarSystem("datafiles/planets_data.txt");
-    cout << "2" << endl;
-    cout << "jeff" << jeff.bodies[0].F << endl;
-    cout << "3" << endl;
-    */
+
     Nbody euler = Nbody();
     Nbody verlet = Nbody();
     std::array<int, 8> stepsperYr = {100, 500, 1000, 1500, 2000, 3000, 4000};
@@ -63,16 +48,16 @@ int main(int argc, char* argv[]){
     }
 
 
-    */
-    energy_verlet.write_energis_angmom("energy_verlet.txt");
-    energy_verlet.velocity_verlet();
-
+    
     Nbody energy_verlet = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
+    energy_verlet.velocity_verlet();
+    energy_verlet.write_energis_angmom("energy_verlet.txt", directory);
 
-    energy_euler.write_energis_angmom("energy_euler.txt");
-    energy_euler.forward_euler();
 
     Nbody energy_euler = Nbody(200, 5000, 2e5, "datafiles/" + input_filename, false, 2);
-    /*
+    energy_euler.forward_euler();
+    energy_euler.write_energis_angmom("energy_euler.txt", directory);
+
+
     return 0;
 }
