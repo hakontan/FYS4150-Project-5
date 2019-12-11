@@ -19,6 +19,8 @@ class Nbody{
         arma::mat K_coords;
         arma::mat l_coords;
 
+        arma::mat t;
+
         arma::vec ai_prev = arma::zeros(3);
         //std::vector<CelestialBody> bodies;
         int N_bodies;
@@ -29,13 +31,14 @@ class Nbody{
 
         Nbody();
         Nbody(double years, int NperYr, int writenr, string filename, bool einstein=false, double beta=2);
-
+        Nbody(double years, int NperYr, string filename);
 
         void forward_euler();
 
         void velocity_verlet();
+        void velocity_verlet_mercury();
 
-        void write_pos(string filename, string directory = "", bool binary = false);
+        void write_pos(string filename, string directory = "", bool binary = false, bool time = false);
         //void write_pos(string filename){write_pos(filename, false);}
 
         void write_vel(string filename, string directory = "", bool binary = false);
