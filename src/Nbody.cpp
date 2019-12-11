@@ -33,23 +33,23 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
     }
 
-    Nbody::Nbody(double years, int NperYr, string filename) {
+    Nbody::Nbody(double years, int NperYr, string filename, bool einstein) {
 
         N = (int) std::round(years * NperYr);
         dt = 1.0 / (double) NperYr;
         //cout << dt << endl;
-        system = SolarSystem(filename, true, 2.0);
+        system = SolarSystem(filename, einstein, 2.0);
         //cout << "edgd" << endl;
         //system.bodies[0].pos.print();
         N_bodies = system.bodies.size();
-        //cout << "bodies " << N_bodies << endl;
-
-        datapoints = writenr;
-        
-        x_coords = arma::zeros(2 * NperYr, N_bodies);
-        y_coords = arma::zeros(2 * NperYr, N_bodies);
-        z_coords = arma::zeros(2 * NperYr, N_bodies);
-        t = arma::zeros(2 * NperYr)
+        //cout << "bodies " << N_bodies << endl;        
+        x_coords = arma::zeros(1 * NperYr, N_bodies);
+        y_coords = arma::zeros(1 * NperYr, N_bodies);
+        z_coords = arma::zeros(1 * NperYr, N_bodies);
+        center_of_mass = arma::zeros(1 * NperYr, 3);
+        t = arma::zeros(2 * NperYr);
+        NperYr_ = NperYr;
+        years_ = years;
     }
 
 
@@ -146,7 +146,8 @@ void Nbody::velocity_verlet() {
 }
 
 void Nbody::velocity_verlet_mercury() {
-
+    int c2 = 0;
+    int c = 0;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
             ai_prev = system.bodies[j].F / system.bodies[j].mass;
@@ -156,26 +157,39 @@ void Nbody::velocity_verlet_mercury() {
             system.bodies[j].vel += 0.5 * dt * (ai_prev + system.bodies[j].F / system.bodies[j].mass);
             system.update_cm();
 
-            if (i < NperYr)) {
+            if (i < 0.5 * NperYr_) {
                 x_coords(i, j) = system.bodies[j].pos[0];
                 y_coords(i, j) = system.bodies[j].pos[1];
                 z_coords(i, j) = system.bodies[j].pos[2];
-                t(i) = i * dt
+                center_of_mass(i, 0) = system.R_cm(0);
+                center_of_mass(i, 1) = system.R_cm(1);
+                center_of_mass(i, 2) = system.R_cm(2);
+                t(i) = i * dt;
+                c = i + 1;
 
             }
 
-            if (i > (years - 1 ) * NperYr) {
-                x_coords(i, j) = system.bodies[j].pos[0];
-                y_coords(i, j) = system.bodies[j].pos[1];
-                z_coords(i, j) = system.bodies[j].pos[2];
-                t(i) = i * dt
+            if (i > (years_ - 0.5) * NperYr_) {
+                x_coords(c, j) = system.bodies[j].pos[0];
+                y_coords(c, j) = system.bodies[j].pos[1];
+                z_coords(c, j) = system.bodies[j].pos[2];
+                center_of_mass(c, 0) = system.R_cm(0);
+                center_of_mass(c, 1) = system.R_cm(1);
+                center_of_mass(c, 2) = system.R_cm(2);
+                t(c) = i * dt;
+                if (j == N_bodies){
+                    c++;
+                }
 
             }
+            
         }
-        if (i == c * (int) std::round(N / (double) datapoints)){
-            c++;
+        /*
+        if (i >= c2 * N){
+            c2 += 0.1;
             cout << i / ((double) N) * 100 << " % "<< endl;
         }
+        */
     }
 }
 
