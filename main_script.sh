@@ -79,7 +79,7 @@ read yn
 if [ "$yn" == "y" ]
 then
   mkdir -p datafiles/filestaskf
-  ./outputtaskf.out
+  ./outputtaskf.out Sun Mercury Venus Earth Roadster Mars Jupiter Saturn Neptune Uranus Pluto
 fi
 
 echo "Plot results task f? (y/n)"

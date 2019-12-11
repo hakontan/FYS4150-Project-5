@@ -1,13 +1,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+fonts = {
+    "font.family": "serif",
+    "axes.labelsize": 10,
+    "font.size": 10,
+    "legend.fontsize": 10,
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10,
+}
+
+plt.rcParams.update(fonts)
 
 file_ending = ["025", "05", "1", "15", "2"]
 beta_ending = ["2", "22", "24", "26", "28", "30"]
-v_init = ["7.088", "8.42", "8.86", "9.746", "13.29"]
+v_init = ["2.215", "4.43", "8.86", "13.29", "17.72"]
 beta = ["2.0", "2.2", "2.4", "2.6", "2.8", "3.0"]
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=[3.35289, 3.35289])
 
 c = 0
 for i in file_ending:
@@ -20,19 +30,24 @@ for i in file_ending:
     z_coords = np.loadtxt(
         f"datafiles/filestaskd/z_escapevel{i}.txt", skiprows=2
     )
-    ax.plot(x_coords[:, 1], y_coords[:, 1], label=fr"$v_{{init}}$={v_init[c]}AU/Yr")
+    ax.plot(x_coords[:, 1], y_coords[:, 1], label=fr"$v_\mathrm{{init}}$={v_init[c]}AU/Yr")
     c += 1
 
 ax.set_xlim([-200, 15])
 ax.set_ylim([-15, 200])
+ax.grid()
 ax.legend()
-plt.show()
+ax.set_xlabel("x [Au]")
+ax.set_ylabel("y [Au]")
+fig.tight_layout()
+fig.savefig("../doc/Figures/espace.pdf", dpi=1000)
+fig.clf()
 
 
-fig, ax = plt.subplots()
-c=0
-for i in beta_ending:
-    x_coords= np.loadtxt(
+fig, ax = plt.subplots(figsize=[3.35289, 3.35289])
+
+for index, i in enumerate(beta_ending):
+    x_coords = np.loadtxt(
         f"datafiles/filestaskd/x_beta_var{i}.txt", skiprows=2
     )
     y_coords = np.loadtxt(
@@ -41,10 +56,13 @@ for i in beta_ending:
     z_coords = np.loadtxt(
         f"datafiles/filestaskd/z_beta_var{i}.txt", skiprows=2
     )
-    ax.plot(x_coords[:, 1], y_coords[:, 1], label=fr"$\beta$={beta[c]}")
-    c += 1
+    ax.plot(x_coords[:, 1], y_coords[:, 1], label=fr"$\beta$={beta[index]}")
 
-ax.set_xlim([-200, 15])
-ax.set_ylim([-15, 200])
+
+ax.grid()
 ax.legend()
-plt.show()
+ax.set_title(r"$v_\mathrm{init}$ = 6.7 Au/Yr")
+ax.set_xlabel(r"$x$ [Au]")
+ax.set_ylabel(r"$y$ [Au]")
+fig.tight_layout()
+fig.savefig("../doc/Figures/beta.pdf", dpi=1000)
