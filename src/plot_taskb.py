@@ -1,6 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+fonts = {
+    "font.family": "serif",
+    "axes.labelsize": 10,
+    "font.size": 10,
+    "legend.fontsize": 10,
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10,
+}
+
+plt.rcParams.update(fonts)
+
 filename_verlet = "simulation_Sun_Earthverlet"
 filename_euler = "simulation_Sun_Eartheuler"
 
@@ -19,7 +30,6 @@ earth_init_y = 0.0
 
 verlet_r = []
 euler_r = []
-fig, ax = plt.subplots()
 for i in range(7):
     # print(i)
     x_coords_verlet = np.loadtxt(
@@ -57,10 +67,7 @@ for i in range(7):
     euler_r.append(np.abs(np.max(a_euler) - earth_init_x))
     ax.plot(x_coords_verlet[:, 1], y_coords_verlet[:, 1])
 
-
-plt.show()
-
-fig, ax = plt.subplots(1, 2)
+fig, ax = plt.subplots(1, 2, figsize=[7.1014, 7.1014/1.618])
 ax = ax.ravel()
 ax[0].plot(dt, verlet_r, "ro", label="verlet")
 ax[1].plot(dt, euler_r, "bo", label="euler")
@@ -70,4 +77,5 @@ ax[0].set_xlabel("dt [Yrs]")
 ax[1].set_xlabel("dt [Yrs]")
 ax[0].set_ylabel("Discrepancy from circular orbit [AU]")
 
-plt.show()
+fig.tight_layout()
+fig.savefig("../doc/Figures/taskb_errors.pdf", dpi=1000)

@@ -1,6 +1,6 @@
-import numpy as np 
+import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 
 x = np.loadtxt("x_SolarSystem.txt", skiprows = 2)
 y = np.loadtxt("y_SolarSystem.txt", skiprows = 2)
@@ -20,13 +20,13 @@ ax.set_xlabel(r"$x$ [AU]")
 ax.set_ylabel(r"$y$ [AU]")
 ax.set_zlabel(r"$z$ [AU]")
 
-
+fig.set_size_inches([7.1014, 7.1014/1.618])
+fig.tight_layout()
 fig.savefig("../doc/Figures/OuterSolarSystem.pdf", dpi = 1000)
 
-ax.set_xlim([1.5 * np.min(x[:, -1]), 1.5 * np.max(x[:, -1])])    
+ax.set_xlim([1.5 * np.min(x[:, -1]), 1.5 * np.max(x[:, -1])])
 ax.set_ylim([1.5 * np.min(x[:, -1]), 1.5 * np.max(x[:, -1])])
 ax.set_zlim([-3, 3])
 
+fig.tight_layout()
 fig.savefig("../doc/Figures/InnerSolarSystem.pdf", dpi = 1000)
-
-plt.show()

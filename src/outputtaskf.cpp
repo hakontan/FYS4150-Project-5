@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
             input_filename += ".txt";
         }
     }
-    
+
     int Nyr = 250;
     int NperYr = 1e5;
     int writenr = 1e5;
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
     Nbody SolarSystem = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
 
     SolarSystem.velocity_verlet();
-    SolarSystem.write_pos("SolarSystem");
+    SolarSystem.write_pos("SolarSystem", "datafiles/filestaskf/");
 
     return 0;
 }

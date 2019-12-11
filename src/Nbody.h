@@ -22,7 +22,7 @@ class Nbody{
         arma::mat t;
 
         arma::vec ai_prev = arma::zeros(3);
-        //std::vector<CelestialBody> bodies;
+
         int N_bodies;
         int N;
         double dt;
@@ -39,14 +39,11 @@ class Nbody{
         void velocity_verlet_mercury();
 
         void write_pos(string filename, string directory = "", bool binary = false, bool time = false);
-        //void write_pos(string filename){write_pos(filename, false);}
 
         void write_vel(string filename, string directory = "", bool binary = false);
-        //void write_vel(string filename){write_vel(filename, false);}
 
         void write_energis_angmom(string filename, string directory = "", bool binary = false);
-        //void write_energis_angmom(string
-        //filename){write_energis_angmom(filename, false);}
+
     private:
         int NperYr_;
         int years_;
