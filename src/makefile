@@ -27,7 +27,7 @@ ${DATA_E}:        outputtaske.cpp CelestialBody.cpp Nbody.cpp SolarSystem.cpp
 					${CPPflags} outputtaske.cpp CelestialBody.cpp Nbody.cpp SolarSystem.cpp ${LIB} -o ${DATA_E}
 
 
-${DATA_E}:        outputtaskf.cpp CelestialBody.cpp Nbody.cpp SolarSystem.cpp
+${DATA_F}:        outputtaskf.cpp CelestialBody.cpp Nbody.cpp SolarSystem.cpp
 				${CPPflags} outputtaskf.cpp CelestialBody.cpp Nbody.cpp SolarSystem.cpp ${LIB} -o ${DATA_F}
 clean:
 		rm *.o
