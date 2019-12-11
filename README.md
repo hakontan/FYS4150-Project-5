@@ -11,10 +11,10 @@
 ## Build instructions
 * Run mains_script.sh to run tests and genererate figures and results presented in the report. This will also ask if you want to build the report using LaTeX. The plots are generated using the Matplotlib Python libary using Python > 3.6.
 
-* Individual results can be calculated by compiling and running their respective main file named "outputtaskx.cpp", where x represents the task number. The figures can be generated equivalently by running "plot_taskx.py".
+* Individual results can be calculated by compiling and running their respective main file named "*outputtaskx.cpp*", where *x* represents the task number. The figures can be generated equivalently by running "*plot_taskx.py*".
 
 ## Structure
-* The calculations are done using the Nbody class contained in Nbody.cpp which depends on SolarSystem.cpp and CelstialBody.cpp.
+* The calculations are done using the Nbody class contained in Nbody.cpp which depends on SolarSystem.cpp and CelstialBody.cpp. All are containted in the src/ folder 
 * src/ contains all source code to generate figures and results.
 * src/datafiles contains all datafiles giving inital conditions to the system when producing results for the tasks given.
 * src/datafiles/filestaskx contains the calculated results for the respective task as either .txt or .bin depending on argument given to the program.
