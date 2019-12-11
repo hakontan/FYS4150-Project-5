@@ -9,7 +9,7 @@ Nbody::Nbody() {
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
     /*
     Initialize armadillo matrices for storing the x, y and z coordinates
-    for position and velocity as well as kinetic and potential energy and 
+    for position and velocity as well as kinetic and potential energy and
     angular momentum for all celestial bodies.
     ------------
     years: double
@@ -29,13 +29,13 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
     */
     N = (int) std::round(years * NperYr); // number of timesteps
     dt = 1.0 / (double) NperYr; // timestep
-    
+
 
     system = SolarSystem(filename, einstein, beta);
     N_bodies = system.bodies.size();
 
     datapoints = writenr;
-        
+
     x_coords = arma::zeros(datapoints, N_bodies);
     y_coords = arma::zeros(datapoints, N_bodies);
     z_coords = arma::zeros(datapoints, N_bodies);
@@ -213,7 +213,7 @@ void Nbody::velocity_verlet_mercury() {
                 }
 
             }
-            
+
         }
     }
 }
