@@ -7,7 +7,7 @@ Nbody::Nbody() {
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
     /*
     Initialize armadillo matrices for storing the x, y and z coordinates
-    for position and velocity as well as kinetic and potential energy and 
+    for position and velocity as well as kinetic and potential energy and
     angular momentum for all celestial bodies.
     ------------
     years: double
@@ -19,13 +19,13 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
     */
     N = (int) std::round(years * NperYr); // number of timesteps
     dt = 1.0 / (double) NperYr; // timestep
-    
+
 
     system = SolarSystem(filename, einstein, beta);
     N_bodies = system.bodies.size();
 
     datapoints = writenr;
-        
+
     x_coords = arma::zeros(datapoints, N_bodies);
     y_coords = arma::zeros(datapoints, N_bodies);
     z_coords = arma::zeros(datapoints, N_bodies);
@@ -50,7 +50,7 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
         //cout << "edgd" << endl;
         //system.bodies[0].pos.print();
         N_bodies = system.bodies.size();
-        //cout << "bodies " << N_bodies << endl;        
+        //cout << "bodies " << N_bodies << endl;
         x_coords = arma::zeros(1 * NperYr, N_bodies);
         y_coords = arma::zeros(1 * NperYr, N_bodies);
         z_coords = arma::zeros(1 * NperYr, N_bodies);
@@ -154,7 +154,6 @@ void Nbody::velocity_verlet() {
 }
 
 void Nbody::velocity_verlet_mercury() {
-    int c2 = 0;
     int c = 0;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
@@ -190,7 +189,7 @@ void Nbody::velocity_verlet_mercury() {
                 }
 
             }
-            
+
         }
         /*
         if (i >= c2 * N){

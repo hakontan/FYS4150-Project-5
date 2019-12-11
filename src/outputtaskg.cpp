@@ -21,24 +21,24 @@ int main(int argc, char* argv[]){
     int writenr = 2e7;
     /*
     Nbody MercuryEinstein = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, true, 2);
-    
+
     MercuryEinstein.velocity_verlet();
 
     MercuryEinstein.write_pos("MercuryEinsteinLarge");
     MercuryEinstein.write_energis_angmom("MercuryEinsteinLarge");
-    
+
     Nbody MercuryNewton = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
 
     MercuryNewton.velocity_verlet();
     MercuryNewton.write_pos("MercuryNewtonLarge");
     */
-    
+
     Nbody MercuryEinstein = Nbody(Nyr, NperYr, "datafiles/" + input_filename, true);
     MercuryEinstein.velocity_verlet_mercury();
-    MercuryEinstein.write_pos("MercuryEinsteinLarge", "datafiles/outputtaskg/", false, true);
-    
+    MercuryEinstein.write_pos("MercuryEinsteinLarge", "datafiles/filestaskg/", false, true);
+
     Nbody MercuryNewton = Nbody(Nyr, NperYr, "datafiles/" + input_filename);
     MercuryNewton.velocity_verlet_mercury();
-    MercuryNewton.write_pos("MercuryNewtonLarge", "datafiles/outputtaskg/", false, true);
+    MercuryNewton.write_pos("MercuryNewtonLarge", "datafiles/filestaskg/", false, true);
     return 0;
 }
