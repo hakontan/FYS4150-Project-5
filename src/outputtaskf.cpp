@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     }
 
     int Nyr = 250;
-    int NperYr = 1e5;
+    int NperYr = 1e6;
     int writenr = 1e5;
 
     Nbody SolarSystem = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
