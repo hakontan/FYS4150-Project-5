@@ -2,7 +2,7 @@
 
 ## Overview
 
-* This repository contains source code as well as the report for the project titled "Building a model for the solar system using ordinary differential equations" in the course FYS4150 teached at the University of Oslo autumn 2019. Link to project description can be found [here](http://compphysics.github.io/ComputationalPhysics/doc/Projects/2019/Project5/SolarSystem/html/SolarSystem.html). 
+* This repository contains source code as well as the report for the project titled "*Building a model for the solar system using ordinary differential equations*" in the course FYS4150 teached at the University of Oslo autumn 2019. Link to project description can be found [here](http://compphysics.github.io/ComputationalPhysics/doc/Projects/2019/Project5/SolarSystem/html/SolarSystem.html). 
 
 * The goal of this project is to create an N-body simulator to solve the motion of the celestial bodies in the solar system using newtons gravitational law.
 
