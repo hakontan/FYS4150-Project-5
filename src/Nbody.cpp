@@ -5,38 +5,46 @@ Nbody::Nbody() {
 }
 
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
+    /*
+    Initialize armadillo matrices for storing the x, y and z coordinates
+    for position and velocity as well as kinetic and potential energy and 
+    angular momentum for all celestial bodies.
+    ------------
+    years: double
+        The amount of years to solve the motion of the celestial bodies for.
+    NperYr: int
+        Number of datapoints per year.
+    x2, y2, z2: double
+        Cartesian coordinates for the vector r2
+    */
+    N = (int) std::round(years * NperYr); // number of timesteps
+    dt = 1.0 / (double) NperYr; // timestep
+    
 
-        N = (int) std::round(years * NperYr);
-        dt = 1.0 / (double) NperYr;
-        //cout << dt << endl;
+    system = SolarSystem(filename, einstein, beta);
+    N_bodies = system.bodies.size();
 
-        system = SolarSystem(filename, einstein, beta);
-        //cout << "edgd" << endl;
-        //system.bodies[0].pos.print();
-        N_bodies = system.bodies.size();
-        //cout << "bodies " << N_bodies << endl;
-
-        datapoints = writenr;
+    datapoints = writenr;
         
-        x_coords = arma::zeros(datapoints, N_bodies);
-        y_coords = arma::zeros(datapoints, N_bodies);
-        z_coords = arma::zeros(datapoints, N_bodies);
-        center_of_mass = arma::zeros(datapoints, 3);
+    x_coords = arma::zeros(datapoints, N_bodies);
+    y_coords = arma::zeros(datapoints, N_bodies);
+    z_coords = arma::zeros(datapoints, N_bodies);
+    center_of_mass = arma::zeros(datapoints, 3);
 
-        vx_coords = arma::zeros(datapoints, N_bodies);
-        vy_coords = arma::zeros(datapoints, N_bodies);
-        vz_coords = arma::zeros(datapoints, N_bodies);
+    vx_coords = arma::zeros(datapoints, N_bodies);
+    vy_coords = arma::zeros(datapoints, N_bodies);
+    vz_coords = arma::zeros(datapoints, N_bodies);
 
-        V_coords = arma::zeros(datapoints, N_bodies + 1);
-        K_coords = arma::zeros(datapoints, N_bodies + 1);
-        l_coords = arma::zeros(datapoints, N_bodies + 1);
+    V_coords = arma::zeros(datapoints, N_bodies + 1);
+    K_coords = arma::zeros(datapoints, N_bodies + 1);
+    l_coords = arma::zeros(datapoints, N_bodies + 1);
 
     }
 
     Nbody::Nbody(double years, int NperYr, string filename, bool einstein) {
 
-        N = (int) std::round(years * NperYr);
-        dt = 1.0 / (double) NperYr;
+    N = (int) std::round(years * NperYr);
+    dt = 1.0 / (double) NperYr;
         //cout << dt << endl;
         system = SolarSystem(filename, einstein, 2.0);
         //cout << "edgd" << endl;
