@@ -1,7 +1,9 @@
 #include "Nbody.h"
 
 Nbody::Nbody() {
-
+    /*
+    Empty constructor to initialize Nbody objects.
+    */
 }
 
 Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einstein, double beta) {
@@ -14,8 +16,16 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
         The amount of years to solve the motion of the celestial bodies for.
     NperYr: int
         Number of datapoints per year.
-    x2, y2, z2: double
-        Cartesian coordinates for the vector r2
+    writenr: int
+        How many datapoints to store from the simulation.
+    filename: string
+        Name of the file to store the data.
+    einstein: bool
+        condition to solve equations using relativistic correction to the force.
+        Default is false.
+    beta: double
+        Exponent of the radial coordinate in the gravatiational force.
+        Default is set to 2.0.
     */
     N = (int) std::round(years * NperYr); // number of timesteps
     dt = 1.0 / (double) NperYr; // timestep
@@ -41,43 +51,48 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
     }
 
-    Nbody::Nbody(double years, int NperYr, string filename, bool einstein) {
-
+Nbody::Nbody(double years, int NperYr, string filename, bool einstein) {
+    /*
+    Modified Nbody storing only positional coordinates and time as arma matrices.
+    Used for the calculation of precession of mercury.
+    ------------
+    years: double
+        The amount of years to solve the motion of the celestial bodies for.
+    NperYr: int
+        Number of datapoints per year.
+    filename: string
+        Name of the file to store the data.
+    einstein: bool
+        condition to solve equations using relativistic correction to the force.
+        Default is false.
+    */
     N = (int) std::round(years * NperYr);
     dt = 1.0 / (double) NperYr;
-        //cout << dt << endl;
-        system = SolarSystem(filename, einstein, 2.0);
-        //cout << "edgd" << endl;
-        //system.bodies[0].pos.print();
-        N_bodies = system.bodies.size();
-        //cout << "bodies " << N_bodies << endl;
-        x_coords = arma::zeros(1 * NperYr, N_bodies);
-        y_coords = arma::zeros(1 * NperYr, N_bodies);
-        z_coords = arma::zeros(1 * NperYr, N_bodies);
-        center_of_mass = arma::zeros(1 * NperYr, 3);
-        t = arma::zeros(2 * NperYr);
-        NperYr_ = NperYr;
-        years_ = years;
-    }
+    
+    system = SolarSystem(filename, einstein, 2.0);
+    N_bodies = system.bodies.size();     
+    x_coords = arma::zeros(1 * NperYr, N_bodies);
+    y_coords = arma::zeros(1 * NperYr, N_bodies);
+    z_coords = arma::zeros(1 * NperYr, N_bodies);
+    center_of_mass = arma::zeros(1 * NperYr, 3);
+    t = arma::zeros(2 * NperYr);
+    NperYr_ = NperYr;
+    years_ = years;
+}
 
 
 void Nbody::forward_euler() {
+    /*
+    Solves the motion of the celestial bodies using the forward euler method.
+    */   
     int c = 0;
     int c2 = 0;
-    //cout << "chedlan" << endl;
-    //cout << N_bodies << endl;
-    //cout << system.bodies.size() << endl;
-    //system.bodies[0].vel.print();
-    //cout << datapoints << " " << N << " " << N_bodies << endl;
+
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
-            //cout << "plss" << j << endl;
-            //system.bodies[j].vel.print();
-            //cout << "JEFF XDDD" << endl;
+
             system.bodies[j].pos += dt * system.bodies[j].vel;
-            //cout << "jeff" << endl;
             system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
-            //cout << "jedna" << endl;
             system.update_force_potential();
             system.update_cm();
 
@@ -113,6 +128,9 @@ void Nbody::forward_euler() {
 }
 
 void Nbody::velocity_verlet() {
+    /*
+    Solves the motion of the celestial bodies using the velocity-verlet method.
+    */  
     int c = 0;
     int c2 = 0;
     for (int i = 0; i < N; i++) {
@@ -154,6 +172,12 @@ void Nbody::velocity_verlet() {
 }
 
 void Nbody::velocity_verlet_mercury() {
+    /*
+    Solves the motion of the celestial bodies using the velocity-verlet method.
+    This method is specialized to store the data for the first and last year
+    of the calculation used in calculating the precession of mercury@s orbit
+    */ 
+    int c2 = 0;
     int c = 0;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
@@ -191,30 +215,36 @@ void Nbody::velocity_verlet_mercury() {
             }
 
         }
-        /*
-        if (i >= c2 * N){
-            c2 += 0.1;
-            cout << i / ((double) N) * 100 << " % "<< endl;
-        }
-        */
     }
 }
 
 
 void Nbody::write_pos(string filename, string directory, bool binary, bool time){
+    /*
+    Function that writes the calculated x, y and z coordinates of the position
+    to file
+    ------------
+    filename: string
+        name of the file 
+    NperYr: int
+        Number of datapoints per year.
+    binary: bool
+        Condition to store the files as .bin or .txt.
+        Defualt value is false
+    time: bool
+        Condition to store all timesteps used in the precession of mercury.
+        default is false.
+    */
     if (binary == true){
-        //cout << "write_pos if" << endl;
         x_coords.save(directory + "x_" + filename + ".bin", arma::arma_binary);
         y_coords.save(directory + "y_" + filename + ".bin", arma::arma_binary);
         z_coords.save(directory + "z_" + filename + ".bin", arma::arma_binary);
         center_of_mass.save(directory + "R_cm_" + filename + ".bin", arma::arma_binary);
     }
     else {
-        //cout << "write_pos else" << endl;
         x_coords.save(directory + "x_" + filename + ".txt", arma::arma_ascii);
         y_coords.save(directory + "y_" + filename + ".txt", arma::arma_ascii);
         z_coords.save(directory + "z_" + filename + ".txt", arma::arma_ascii);
-        //x_coords.print();
         center_of_mass.save(directory + "R_cm_" + filename + ".txt", arma::arma_ascii);
     }
 
@@ -224,7 +254,20 @@ void Nbody::write_pos(string filename, string directory, bool binary, bool time)
 }
 
 void Nbody::write_vel(string filename, string directory, bool binary){
-    //cout << "write_vel" << endl;
+    /*
+    Function that writes the calculated x, y and z coordinates of the velocity
+    to file
+    ------------
+    filename: string
+        name of the file 
+    NperYr: int
+        Number of datapoints per year.
+    filename: string
+        Name of the file to store the data.
+    binary: bool
+        Condition to store the files as .bin or .txt.
+        Defualt value is false
+    */
     if (binary == true){
         vx_coords.save(directory + "vx_" + filename + ".bin", arma::arma_binary);
         vy_coords.save(directory + "vy_" + filename + ".bin", arma::arma_binary);
@@ -238,6 +281,18 @@ void Nbody::write_vel(string filename, string directory, bool binary){
 }
 
 void Nbody::write_energis_angmom(string filename, string directory, bool binary){
+    /*
+    Function that writes the calculated valeus for the kinetic and potential
+    energy as well as the angular momentum.
+    ------------
+    filename: string
+        name of the file 
+    NperYr: int
+        Number of datapoints per year.
+    binary: bool
+        Condition to store the files as .bin or .txt.
+        Defualt value is false
+    */
     if (binary == true){
         V_coords.save(directory + "V_" + filename + ".bin", arma::arma_binary);
         K_coords.save(directory + "K_" + filename + ".bin", arma::arma_binary);

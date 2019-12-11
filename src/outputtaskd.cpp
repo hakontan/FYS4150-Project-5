@@ -6,8 +6,6 @@
 
 int main()
 {
-
-
     string input_filename = "data_sunearth_escapevel";
     string output_filename = "escapevel";
     std::array<string, 5> filenr = {"025", "05", "1", "15", "2"};
