@@ -207,8 +207,97 @@ chenck how close to thir staring point thay get after one orbit.
 
 \subsection{Escape Velocity and Modifies Gravitational Force}
 Next we will consider a Sun-Earth system where the Earth starts 1 AU from the
-Sun.
+Sun. We now want to find which initial velocity the Earth must have for it to
+escape the Sun's gravitational field. To do this we run several simulations,
+each with different initial velocities. In order to determain whether the Earth
+has left the gravitational field of the Sun, escaping to infinity, we simply
+simulate the system over a large amount of time. This is, of course, not the
+best method since the Earth may simply orbit the Sun on a very eccentric orbit
+with a periode langer than the simulated time. However, we will still get a
+rough estimate of the escape velocity when simulating over a large amount of time.
 
+The numerical value of the escape velocity can easily be found. Consider a
+planet of mass $m$ initially at escape velocity $v_\mathrm{esc}$ at radius $r$
+from the Sun. If it is to escape to infinity, where it is at rest, it will have
+energy $E_\infty = 0$ at $r\to\infty$. Energy conservation then gives us 
+\begin{align}
+    E_0 = \frac{1}{2}mv_\mathrm{esc}^2 - G\frac{M_\odot m}{r} = 0 = E_\infty,
+\end{align} 
+which gives $v_\mathrm{esc} = \sqrt{\frac{2GM}{r}}$. The planet $m$ must thus
+initially have a speed of $v_\mathrm{esc}$ to escape the solar system.
+
+Further, we want to find how the orbit of the Earth would behave like if
+changing the gravitational force to 
+\begin{align}
+    F = -G\frac{M_\odot M_\oplus}{r^\beta},
+\end{align}
+for some $\beta\in[2, 3]$. To do this we simulate the orbit of several different
+values of $\beta$ and compare them. Our findings can than be theoretical
+expectations. According to Bertrand's theorem (KILDER) the attractional central
+force must have a power law index $n = -\beta > -3$ for an orbit to be closed. This is so
+that the effective potential $U_\mathrm{eff} = \frac{l^2}{2mr^2} -
+G\frac{M_\odot m}{(1-\beta)r^{\beta - 1}}$ has a local minimum around which the
+planet can oscillate. This is only the case when $\beta > 3$.
+
+
+\subsection{The Three-Body Problem} \label{subsec:three_body_prob}
+Now that we have looked at several simpler two-body systems, it is time to
+consider a three-body system of the Sun, Earth and Jupiter. We will simulate the
+behaviour of this system for the regular masses of the involved celectial
+bodies, and what happens when increasing the mass of Jupiter by a factor 10 and
+1000 respectively. The motion of the system as a whole was corrected by
+transforming into the CM frame.
+
+We expect that the system will be quite stable when Jupiter has its regular
+mass, however when increaing its mass by a factor 10 we expect Jupiter's pull to
+affect both the Earth and Sun's motion. The Sun, eventhough it is very massive
+compared to Jupiter (about 1000 times more massive), will feel the pull of
+Jupiter and thus orbit the CM (which is withing the Sun). Increasing the mass of
+Jupiter by a factor 10 will thus enlargen the orbital motion of the Sun, and the
+now increast pull from Jupiter may change the motion of the Earth significalty. 
+
+When increasing the mass of Jupiter by a factor 1000, we essentially simulate a
+double-star system, as Jupiter is now about as massive as the Sun. In this case
+it would be espessially unrealistic to keep the Sun static, as the now added new
+star to the system will have a non-negligible affect on the Sun. The Sun and
+Jupiter should now orbit each other. The Earth may now be thrown out of the
+system by a sudden boost in angular momentum of one of the two more massive
+objects. 
+
+
+\subsection{The Full Solar System} \label{subsec:solar_system}
+We have now consideres a N-body simulation with two and three bodies. Next we
+add all planets from Mercury to Neptune, including the Sun and the dwarf planet
+Pluto, to our System. To see how low-mass objects behave in the Solar System
+simulation, we include Elon Musk's Tesla Roadster launched into orbit by
+Space-X. To get closed orbits for all bodies included, even Pluto, we simulate
+about 250 yr of time.
+
+\subsection{Mercurie's Perihelion Precession}
+When looking closely at Mercury's orbit one can see that it is not simply a
+static closed ellipse, but that the semi-major axis of the ellipse is rotating
+slowly. This is the so-called Perihelion Precession of Mercury, and is of the
+order of 43 arcseconds per century. Regular Newtonian gravity cannot accound for
+this, however, including general relativistic effects may describe the
+precession better. In order to simulate this we implement the
+relativistic correction to Newtonian gravity written as 
+
+\begin{align}
+    F = \frac{G M_\odot M_\oplus}{r^2}\left(1 + \frac{3l^2}{r c^2}\right),
+\end{align}
+where $l = |\vec{r}\times \vec{v}|$ is the magnitude of Mercury's angular
+momentum per mass and $c$ is the speed of light (KILDER).
+
+In order to compute the perihelion angle $\theta_p$ we use $\tan \theta_p =
+\frac{y_p}{x_p}$, where $(x_p, y_p)$ is the plane position of the perihelion of
+Mercury. This is the point in Mercury's orbit closest to the CM of the system.
+Since the perihelion precession of Mercury is so small, we need to simulate the
+orbits with a sufficiently small time step $h$ and we need to simulate long
+enough, for intance over 100 yr. Also to avoid large amounts of
+saved data, we only save 0.5 yr (Earth years) of data at the beginning and end of the
+simulation. The difference in the angle $\theta_p$ then gives the perihelion
+precession. The numerically found result can than be compared to the theoretical
+value.
 
 \section{Results} \label{sec:results}
 
