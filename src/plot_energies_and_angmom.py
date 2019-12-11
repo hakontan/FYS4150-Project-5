@@ -2,12 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-V_verlet = np.loadtxt("V_energy_verlet.txt", skiprows=2)
-V_euler = np.loadtxt("V_energy_euler.txt", skiprows=2)
-K_verlet = np.loadtxt("K_energy_verlet.txt", skiprows=2)
-K_euler = np.loadtxt("K_energy_euler.txt", skiprows=2)
-l_verlet = np.loadtxt("l_energy_verlet.txt", skiprows=2)
-l_euler = np.loadtxt("l_energy_euler.txt", skiprows=2)
+V_verlet = np.loadtxt("datafiles/filestaskc/V_energy_verlet.txt", skiprows=2)
+V_euler = np.loadtxt("datafiles/filestaskc/V_energy_euler.txt", skiprows=2)
+K_verlet = np.loadtxt("datafiles/filestaskc/K_energy_verlet.txt", skiprows=2)
+K_euler = np.loadtxt("datafiles/filestaskc/K_energy_euler.txt", skiprows=2)
+l_verlet = np.loadtxt("datafiles/filestaskc/l_energy_verlet.txt", skiprows=2)
+l_euler = np.loadtxt("datafiles/filestaskc/l_energy_euler.txt", skiprows=2)
 fig, ax = plt.subplots()
 
 ax.plot(V_verlet[:, 0], V_verlet[:, 2], label=r"$V_\mathrm{Verlet}$")

@@ -9,6 +9,7 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
         N = (int) std::round(years * NperYr);
         dt = 1.0 / (double) NperYr;
         //cout << dt << endl;
+
         system = SolarSystem(filename, einstein, beta);
         //cout << "edgd" << endl;
         //system.bodies[0].pos.print();
@@ -54,6 +55,7 @@ Nbody::Nbody(double years, int NperYr, int writenr, string filename, bool einste
 
 void Nbody::forward_euler() {
     int c = 0;
+    int c2 = 0;
     //cout << "chedlan" << endl;
     //cout << N_bodies << endl;
     //cout << system.bodies.size() << endl;
@@ -93,15 +95,18 @@ void Nbody::forward_euler() {
         }
         if (i == c * (int) std::round(N / (double) datapoints)){
             c++;
-            cout << i / ((double) N) * 100 << " % "<< endl;
         }
 
+        if (i == c2 * (int) std::round(N / (double) datapoints)){
+            c2 += datapoints * 0.01;
+            cout << i / ((double) N) * 100 << " % "<< endl;
+        }
     }
 }
 
 void Nbody::velocity_verlet() {
-
     int c = 0;
+    int c2 = 0;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
             ai_prev = system.bodies[j].F / system.bodies[j].mass;
@@ -132,6 +137,9 @@ void Nbody::velocity_verlet() {
         }
         if (i == c * (int) std::round(N / (double) datapoints)){
             c++;
+        }
+        if (i == c2 * (int) std::round(N / (double) datapoints)){
+            c2 += datapoints * 0.01;
             cout << i / ((double) N) * 100 << " % "<< endl;
         }
     }

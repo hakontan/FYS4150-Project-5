@@ -21,11 +21,10 @@ int main(int argc, char* argv[]){
         }
     }
     //cout << "Made filenames" << endl;
-    //cout << input_filename << "  " << output_filename << endl;
     arma::vec pos = arma::zeros(3);
     arma::vec vel = arma::zeros(3);
 
-
+    
     Nbody euler = Nbody();
     Nbody verlet = Nbody();
     std::array<int, 8> stepsperYr = {100, 500, 1000, 1500, 2000, 3000, 4000};
