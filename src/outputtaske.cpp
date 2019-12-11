@@ -2,24 +2,8 @@
 #include "SolarSystem.h"
 #include "Nbody.h"
 
-int main(int argc, char* argv[]){
-    string output_filename = "simulation_";
-    string input_filename = "data_";
-    for (int i = 1; i < argc; i++) {
-        output_filename += argv[i];
-        input_filename += argv[i];
-        if (i < argc - 1) {
-            output_filename += "_";
-            input_filename += "_";
-        }
-        else {
-            input_filename += ".txt";
-        }
-    }
-    cout << input_filename << "  " << output_filename << endl;
-    arma::vec pos = arma::zeros(3);
-    arma::vec vel = arma::zeros(3);
-    string nam = "jeff";
+int main(){
+
 
     int Nyr = 15;
     int NperYr = 50000;
@@ -28,7 +12,7 @@ int main(int argc, char* argv[]){
     Nbody Jupiter1 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter.txt", false, 2);
 
     Jupiter1.velocity_verlet();
-    Jupiter1.write_pos("SunEarthJupiter", "datafiles/filestaske");
+    Jupiter1.write_pos("SunEarthJupiter", "datafiles/filestaske/");
 
     Nbody Jupiter10 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter10.txt", false, 2);
 
