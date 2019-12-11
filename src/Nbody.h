@@ -31,7 +31,7 @@ class Nbody{
 
         Nbody();
         Nbody(double years, int NperYr, int writenr, string filename, bool einstein=false, double beta=2);
-        Nbody(double years, int NperYr, string filename);
+        Nbody(double years, int NperYr, string filename, bool einstein = false);
 
         void forward_euler();
 
@@ -45,7 +45,11 @@ class Nbody{
         //void write_vel(string filename){write_vel(filename, false);}
 
         void write_energis_angmom(string filename, string directory = "", bool binary = false);
-        //void write_energis_angmom(string filename){write_energis_angmom(filename, false);}
+        //void write_energis_angmom(string
+        //filename){write_energis_angmom(filename, false);}
+    private:
+        int NperYr_;
+        int years_;
 };
 
 #endif
