@@ -9,7 +9,7 @@
 * The source code producing the results can be found in the /src folder while the documents and figures related to the final report can be found in the /doc folder.
 
 ## Build instructions
-* Run mains_script.sh to run tests and genererate figures and results presented in the report. This will also ask if you want to build the report using LaTeX. The plots are generated using the Matplotlib Python libary using > Python 3.6.
+* Run mains_script.sh to run tests and genererate figures and results presented in the report. This will also ask if you want to build the report using LaTeX. The plots are generated using the Matplotlib Python libary using Python > 3.6.
 
 * Individual results can be calculated by compiling and running their respective main file named "outputtaskx.cpp", where x represents the task number. The figures can be generated equivalently by running "plot_taskx.py".
 
