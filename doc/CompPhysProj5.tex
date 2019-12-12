@@ -413,6 +413,51 @@ simulated for one year using $10000$ timesteps per year. Using a
 \end{figure*}
 
 \section{Discussion} \label{sec:discussion}
+As seen in the orbits in Figure \ref{fig:traj}, the Verlet method 
+keeps the Earth in a circular object, while the Euler method seems to 
+increase the total energy of the system as its orbital radius increases 
+with time. This is expected behaviour, as Verlet is known to be better
+at conserving energy than Euler. This observation also consistent with 
+Figure \ref{fig:error}, \ref{fig:energy} and \ref{fig:angmom}. An 
+interesting detail in the discrepancies shown in Figure \ref{fig:error}
+is that the error increases with smaller time-steps within the range 
+shown. This makes sense as errors in numerical schemes can be decomposed 
+into \begin{equation}
+\mathrm{err}_\mathrm{tot}=\mathrm{err}_\mathrm{Taylor} + \mathrm{err}_
+\mathrm{Numerical}, \label{eq:error_decomp}
+\end{equation} where $\mathrm{err}_\mathrm{Taylor}$ is the error from the 
+Taylor series used to derive the numerical scheme and $\mathrm{err}_
+\mathrm{Numerical}$ is the error caused by numerical round off. What is 
+likely happening here is that for Verlet 
+$\mathrm{err}_\mathrm{Taylor} \ll \mathrm{err}_\mathrm{Numerical}$, 
+and the numerical round off error increases with decreasing time step. 
+Verlet is clearly better suited than Euler for this kind of system.
+
+Figure \ref{fig:beta} seems to be consistent with Bertrand's theorem, 
+showing that only the Sun-Earth-system with gravity $F_g\propto R^{-2}$ 
+has a closed orbit. The Earth seems to escape the gravitational pull of 
+the Sun when $\beta>2$, as the gravitational pull would be weaker at 
+this distance. One could however expect that at a smaller distance, let's 
+say if we were to simulate a Sun-Mercury-system, the force could increase 
+for $\beta>2$ as $R<1$ AU.
+
+The escape velocity mention stuff here maybe! XD
+
+
+Increasing the mass of Jupiter in the Sun-Earth-Jupiter-system makes the 
+system behave increasingly chaotically, especially at 
+$1000 \cdot M_\mathrm{Jupiter}$. In Figure \ref{fig:jupiter1000} Jupiter 
+has a mass very similar to $M_\odot$, meaning the system devolves 
+into a chaotic three body system. At one point in time the Earth gets 
+very close to Jupiter, causing it to accelerate and escape the system 
+completely. This result may be non-physical, as we have not implemented 
+any collision effects in our solver and the Earth may have actually hit 
+Jupiter here. 
+
+
+
+
+
 
 \section{Conclusion} \label{sec:conclusion}
 
