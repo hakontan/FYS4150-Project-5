@@ -13,6 +13,9 @@
 
 * Individual results can be calculated by compiling and running their respective main file named "*outputtaskx.cpp*", where *x* represents the task number. The figures can be generated equivalently by running "*plot_taskx.py*".
 
+* Please install Python dependencies using [Pipenv](https://github.com/pypa/pipenv) by using the command <tt>pipenv install</tt> prior to running any scripts.  
+
+
 ## Structure
 * The calculations are done using the Nbody class contained in Nbody.cpp which depends on SolarSystem.cpp and CelstialBody.cpp. All are containted in the src/ folder 
 * src/ contains all source code to generate figures and results.
