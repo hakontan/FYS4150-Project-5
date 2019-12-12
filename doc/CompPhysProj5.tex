@@ -10,6 +10,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{wasysym}
 
 \begin{document}
 
@@ -300,6 +301,9 @@ precession. The numerically found result can than be compared to the theoretical
 value.
 
 \section{Results} \label{sec:results}
+The two integration algorithms were compared testing the stability of the
+solutions in circular orbit. Using (likning for sirkulær bane), with $r=1AU$ and
+$M=M_{\astrosun}$, one finds the velocity for circular orbit to be $6.28\mathrm{AU/Yr}$. 
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_angmom.pdf}
 \caption{Angular momentum for Euler and Verlet.}
