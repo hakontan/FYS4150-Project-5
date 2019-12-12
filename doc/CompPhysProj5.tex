@@ -316,6 +316,9 @@ precession. The numerically found result can than be compared to the theoretical
 value.
 
 \section{Results} \label{sec:results}
+The following results were produced running on an Intel Core i7-6700HQ CPU with
+a clock speed of 2.60 GHz and 8GB RAM.
+
 The two integration algorithms were compared testing the stability of the
 solutions in circular orbit. Using (likning for sirkulær bane), with
 $r=1\mathrm{AU}$ and $M=M_{\astrosun}$, one finds the velocity for circular
@@ -332,8 +335,11 @@ function of timestep. The potential and kinetic energy as well as the angular
 momentum for the Earth was also calculated for both methods in the Earth-Sun system. The
 potential and kinetic energies is shown Figure \ref{fig:energy} and the angular
 momentum os shown in Figure \ref{fig:angmom}. The simulation was done over $200$
-years using $100000$ steps per year. Here the earth was also initialized with a
+years using $10^5$ steps per year. Here the earth was also initialized with a
 distance of $1\mathrm{AU}$ from the sun with the calculated circular velocity.
+When calculating the energies and angular momentum both integration methods were
+timed. The Velocity-Verlet scheme had a calculation time of $10.17$ seconds, while the
+Forward Euler method had a calculation time of $10.35$ seconds.
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/circularcomparison.pdf}
@@ -349,13 +355,13 @@ distance of $1\mathrm{AU}$ from the sun with the calculated circular velocity.
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_energies.pdf}
-\caption{Figue showing the potential and kinetic energy as well as the total energy for the Earth in circular orbit using the Forward Euler and the Velocity Verlet method. The simulation was run over $200$ years using a timestep of $100000$ steps per year.}
+\caption{Figue showing the potential and kinetic energy as well as the total energy for the Earth in circular orbit using the Forward Euler and the Velocity Verlet method. The simulation was run over $200$ years using a timestep of $10^5$ steps per year.}
 \label{fig:energy}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_angmom.pdf}
-\caption{Figure showing the angular momentum of the Earth in circular orbit sing the Forward Euler and the Velocity Verlet method. The simulation was run over $200$ years using a timestep of $100000$ steps per year.}
+\caption{Figure showing the angular momentum of the Earth in circular orbit sing the Forward Euler and the Velocity Verlet method. The simulation was run over $200$ years using a timestep of $10^5$ steps per year.}
 \label{fig:angmom}
 \end{figure}
 
@@ -373,7 +379,7 @@ in the radial term of the gravitational law as described in section
 \ref{sec:modgrav}. This result is shown in Figure \ref{fig:beta}. Here we
 initialized the Earth with a distance of $1$AU from the Sun with a velocity
 slightly higher than circular velocity, namely $6.7$AU/Yr. The system was
-simulated for one year using $10000$ timesteps per year.
+simulated for one year using $10^4$ timesteps per year.
 
 
 \begin{figure}
@@ -452,12 +458,16 @@ result was calculated over $100$ years with a step size of $10^7$ steps per year
 
 \section{Discussion} \label{sec:discussion}
 As seen in the orbits in Figure \ref{fig:traj}, the Verlet method 
-keeps the Earth in a circular object, while the Euler method seems to 
+keeps the Earth in a circular orbit, while the Euler method seems to 
 increase the total energy of the system as its orbital radius increases 
 with time. This is expected behaviour, as Verlet is known to be better
 at conserving energy than Euler. This observation also consistent with 
-Figure \ref{fig:error}, \ref{fig:energy} and \ref{fig:angmom}. An 
-interesting detail in the discrepancies shown in Figure \ref{fig:error}
+Figure \ref{fig:energy}. This figure shows that 
+Euler increases the total energy over time, decreasing the kinetic energy
+and increasing the potential energy as the Earth moves away from the Sun. 
+We also see in Figure \ref{fig:angmom} that Euler does not conserve angular 
+momentum over time compared to Verlet.
+An interesting detail in the discrepancies shown in Figure \ref{fig:error}
 is that the error increases with smaller time-steps within the range 
 shown. This makes sense as errors in numerical schemes can be decomposed 
 into \begin{equation}
