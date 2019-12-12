@@ -302,8 +302,21 @@ value.
 
 \section{Results} \label{sec:results}
 The two integration algorithms were compared testing the stability of the
-solutions in circular orbit. Using (likning for sirkulær bane), with $r=1AU$ and
-$M=M_{\astrosun}$, one finds the velocity for circular orbit to be $6.28\mathrm{AU/Yr}$. 
+solutions in circular orbit. Using (likning for sirkulær bane), with $r=1\mathrm{AU}$ and
+$M=M_{\astrosun}$, one finds the velocity for circular orbit to be
+$6.28\mathrm{AU/Yr}$. Figure \ref{fig:traj} shows the solution of the Earth-Sun
+system using both the Velocity-Verlet and the Forward Euler algorithm with a
+timestep of $1500$ steps per year. Here the earth was initialized with a
+distance of $1\mathrm{AU}$ from the sun with the calculated circular velocity.
+The simulation was run over two years.
+
+The potential and kinetic energy
+\begin{figure}
+\includegraphics[scale=1]{Figures/taskb_trajectories.pdf}
+\caption{Trajectory Sun and Earth}
+\label{fig:traj}
+\end{figure}
+
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_angmom.pdf}
 \caption{Angular momentum for Euler and Verlet.}
@@ -317,11 +330,6 @@ $M=M_{\astrosun}$, one finds the velocity for circular orbit to be $6.28\mathrm{
 \label{fig:energy}
 \end{figure}
 
-\begin{figure}
-\includegraphics[scale=1]{Figures/taskb_trajectories.pdf}
-\caption{Trajectory Sun and Earth}
-\label{fig:traj}
-\end{figure}
 
 \begin{figure*}
 \includegraphics[scale=1]{Figures/taskb_errors.pdf}

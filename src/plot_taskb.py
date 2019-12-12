@@ -65,6 +65,7 @@ for i in range(7):
 
     verlet_r.append(np.abs(np.max(a_verlet) - earth_init_x))
     euler_r.append(np.abs(np.max(a_euler) - earth_init_x))
+    
 
 fig, ax = plt.subplots(1, 2, figsize=[7.1014, 7.1014/1.618])
 ax = ax.ravel()
