@@ -308,14 +308,24 @@ $6.28\mathrm{AU/Yr}$. Figure \ref{fig:traj} shows the solution of the Earth-Sun
 system using both the Velocity-Verlet and the Forward Euler algorithm with a
 timestep of $1500$ steps per year. Here the earth was initialized with a
 distance of $1\mathrm{AU}$ from the sun with the calculated circular velocity.
-The simulation was run over two years.
+The simulation was run over two years. The same simulation was done varying the
+amount of steps per year and simulating over two years. This is shown in Figure
+\ref{fig:error}. Here we plot the discrepancy in the distance between the
+initial starting point and the point after the Earth has finished one full orbit
+after being initialized with circular velocity as a function of timestep. 
 
-The potential and kinetic energy
+The potential and kinetic energy was also compared for both metho
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_trajectories.pdf}
 \caption{Trajectory Sun and Earth}
 \label{fig:traj}
 \end{figure}
+
+\begin{figure*}
+\includegraphics[scale=1]{Figures/taskb_errors.pdf}
+\caption{Errors Euler and Verlet}
+\label{fig:error}
+\end{figure*}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_angmom.pdf}
@@ -331,11 +341,6 @@ The potential and kinetic energy
 \end{figure}
 
 
-\begin{figure*}
-\includegraphics[scale=1]{Figures/taskb_errors.pdf}
-\caption{Errors Euler and Verlet}
-\label{fig:error}
-\end{figure*}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/beta.pdf}
