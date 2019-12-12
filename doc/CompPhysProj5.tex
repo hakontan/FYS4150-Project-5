@@ -480,7 +480,10 @@ possible explanation for this is that
 $\mathrm{err}_\mathrm{Taylor} \ll \mathrm{err}_\mathrm{Numerical}$, 
 and the numerical round off error increases with decreasing time step. 
 The total error is clearly better for the Velocity Verlet scheme in 
-this case.
+this case, the error for Euler being several orders of magnitude 
+higher. In addition the Velocity Verlet and Euler schemes seem to have 
+very similar run times, meaning there is no argument for not using 
+Verlet instead of Euler in this case.
 
 When researching gravitational forces with different radial power laws, 
 the results shown Figure \ref{fig:beta} seem to be consistent with 
@@ -505,7 +508,7 @@ make the numerical escape velocity align more with the analytical, but
 our previously discussed results indicate that this could also increase 
 the numerical error and therefore decrease accuracy. The best solution 
 here is likely to use a more sophisticated numerical scheme than 
-Velocity-Verlet.
+Velocity Verlet.
 
 When simulating the Sun-Earth-Jupiter-system with regular masses and 
 initial values from \cite{nasa:2019} as shown in Figure 
@@ -554,7 +557,19 @@ motions that may drown the precession motion we were supposed to measure.
 
 
 \section{Conclusion} \label{sec:conclusion}
-We have created an n-body simulator implementing Newton's law of gravitation and tested it on a solar system scale.
+We have created an $N$-body simulator implementing Newton's law of 
+gravitation and tested it on a solar system scale. Our results imply 
+that our method performs well on these larger scales, but struggles to 
+resolve small scale motions needed to estimate the perihelion precession 
+of Mercury.
+
+In the future collision modelling should be added to better simulate 
+chaotic systems such as a three body problem with equally large masses. 
+Time should be invested in exploring possible reasons for the systematic 
+errors causing us to not properly estimate the perihelion precession 
+of Mercury. Also, the timing comparing the Euler and Velocity Verlet 
+schemes should be done many times and then averaged to get a better 
+estimation of their performance relative to each other.
 \nocite{jensen:2019}
 \newpage
 \bibliography{ref}
