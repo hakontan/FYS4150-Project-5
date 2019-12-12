@@ -277,7 +277,7 @@ simulation, we include Elon Musk's Tesla Roadster launched into orbit by
 Space-X. To get closed orbits for all bodies included, even Pluto, we simulate
 about 250 yr of time.
 
-\subsection{Mercurie's Perihelion Precession}
+\subsection{Mercurie's Perihelion Precession}\label{sec:mercuryprecession}
 When looking closely at Mercury's orbit one can see that it is not simply a
 static closed ellipse, but that the semi-major axis of the ellipse is rotating
 slowly. This is the so-called Perihelion Precession of Mercury, and is of the
@@ -286,7 +286,7 @@ this, however, including general relativistic effects may describe the
 precession better. In order to simulate this we implement the
 relativistic correction to Newtonian gravity written as 
 
-\begin{align}
+\begin{align}\label{eq:relcorrection}
     F = \frac{G M_\odot M_\oplus}{r^2}\left(1 + \frac{3l^2}{r c^2}\right),
 \end{align}
 where $l = |\vec{r}\times \vec{v}|$ is the magnitude of Mercury's angular
@@ -349,12 +349,19 @@ distance of $1\mathrm{AU}$ from the sun with the calculated circular velocity.
 
 When calculating the escape velocity for the Earth with respect to the Sun, we
 found using \ref{eq:v_esc} that the escape velocity for the earth at a distance
-of $1$AU to be $8.86$AU/Yr. .The Velocity-Verlet method was also tested with a varying $\beta$ for the
-exponent in the radial term of the gravitational law as described in section
+of $1$AU to be $8.86$AU/Yr. The escape velocity was also approximated
+numerically. This is shown in Figure \ref{fig:escape}. This result was simulated
+using the the Velocity-Verlet method with an initial distance of $1$AU from the
+Sun along the $x-$axis with a varying intial velocity in the $y-$direction. The
+simulations was run for $1000$ years with a timestep of $1000$ steps per year.
+The simulation time of $1000$ years was chosen to make sure the Earth really
+escapes and does not get pulled back into orbit after a few years. The
+Velocity-Verlet method was also tested with a varying $\beta$ for the exponent
+in the radial term of the gravitational law as described in section
 \ref{sec:modgrav}. This result is shown in Figure \ref{fig:beta}. Here we
 initialized the Earth with a distance of $1$AU from the Sun with a velocity
 slightly higher than circular velocity, namely $6.7$AU/Yr. The system was
-simulated for one year using $10000$ timesteps per year. Using a 
+simulated for one year using $10000$ timesteps per year.
 
 
 
@@ -369,6 +376,20 @@ simulated for one year using $10000$ timesteps per year. Using a
 \caption{Different velocities for Earth Sun system.}
 \label{fig:escape}
 \end{figure}
+
+The method was also tested using the Velocity-Verlet scheme for a three body system including the Sun, Earth and
+Jupiter. These simulations were initialized using the initial data for the three
+objects given by the Horizon-Web interface provided by NASA. The simulations
+were run for $15$ years with a timestep of $10000$ steps per year. We also
+studied the effect of changing the mass of Jupiter by a factor of $10$ and
+$1000$. These results are shown in figures \ref{fig:jupiter},
+\ref{fig:jupiter10} and \ref{fig:jupiter1000} respectively. The method was also
+expanded to include all the major planets in the Solar system including Pluto as
+well as the Tesla Roadster launched by SpaceX. This system was simulated for
+$250$ yeas with a timestep of $10000$ steps per year. Figure \ref{fig:outer}
+shows the full system while Figure \ref{fig:inner} shows the inner Solar system
+as the orbits of the inner planets are barely visible when including the orbits
+of the outer bodies.
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/jupiter.pdf}
@@ -389,16 +410,23 @@ simulated for one year using $10000$ timesteps per year. Using a
 \end{figure}
 
 \begin{figure*}
+\includegraphics[scale=1]{Figures/InnerSolarSystem.pdf}
+\caption{Zoom-in of full solar system}
+\label{fig:outer}
+\end{figure*}
+
+\begin{figure*}
 \includegraphics[scale=1]{Figures/OuterSolarSystem.pdf}
 \caption{Full solar system}
 \label{fig:inner}
 \end{figure*}
 
-\begin{figure*}
-\includegraphics[scale=1]{Figures/InnerSolarSystem.pdf}
-\caption{Zoom-in of full solar system}
-\label{fig:outer}
-\end{figure*}
+The perihelion precession of Mercury was also calculated using the general
+relativistic correction term to the newtonian force given by
+\ref{eq:relcorrection} as discussed in section \ref{sec:mercuryprecession}. The
+precession per century was found to be approximately $450399$ arcseconds with
+the relativistic correction term and $450420$ withouth the correction term. This
+result was calculated over $100$ years with a step size of $10^7$ steps per year.
 
 \section{Discussion} \label{sec:discussion}
 
