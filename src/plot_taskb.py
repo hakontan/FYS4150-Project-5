@@ -65,7 +65,7 @@ for i in range(7):
 
     verlet_r.append(np.abs(np.max(a_verlet) - earth_init_x))
     euler_r.append(np.abs(np.max(a_euler) - earth_init_x))
-    ax.plot(x_coords_verlet[:, 1], y_coords_verlet[:, 1])
+    #ax.plot(x_coords_verlet[:, 1], y_coords_verlet[:, 1])
 
 fig, ax = plt.subplots(1, 2, figsize=[7.1014, 7.1014/1.618])
 ax = ax.ravel()
@@ -79,3 +79,27 @@ ax[0].set_ylabel("Discrepancy from circular orbit [AU]")
 
 fig.tight_layout()
 fig.savefig("../doc/Figures/taskb_errors.pdf", dpi=1000)
+
+
+x_coords_verlet = np.loadtxt(
+        f"datafiles/filestaskc/x_{filename_verlet}{3}.txt", skiprows=2
+    )
+y_coords_verlet = np.loadtxt(
+        f"datafiles/filestaskc/y_{filename_verlet}{3}.txt", skiprows=2
+    )
+x_coords_euler = np.loadtxt(
+        f"datafiles/filestaskc/x_{filename_euler}{3}.txt", skiprows=2
+    )
+y_coords_euler = np.loadtxt(
+        f"datafiles/filestaskc/y_{filename_euler}{3}.txt", skiprows=2
+    )
+
+fig, ax = plt.subplots(figsize=[3.35289, 3.35289])
+ax = ax.ravel()
+ax.plot(x_coords_verlet[:, 1], y_coords_verlet[:, 1], label="Velocity Verlet")
+ax.plot(x_coords_euler[:, 1], y_coords_euler[:, 1], label="Forward Euler")
+ax.legend()
+ax.set_xlabel("x [AU]")
+ax.set_ylabel("y [AU]")
+fig.tight_layout()
+fig.savefig("../doc/Figures/circularcomparison.pdf", dpi=1000)
