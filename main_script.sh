@@ -17,7 +17,7 @@ then
   pipenv run python process_planet_data.py
   pipenv run python process_planet_data.py Sun Earth Jupiter
   pipenv run python process_planet_data.py Sun Mercury Venus Earth Roadster Mars Jupiter Saturn Neptune Uranus Pluto
-  pipenv run process_planet_data.py Sun Mercury
+  pipenv run python process_planet_data.py Sun Mercury
 fi
 
 echo "Generate results task b and c? (y/n)"
