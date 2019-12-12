@@ -14,7 +14,7 @@
 
 \begin{document}
 
-\title{\Large Orbital Mechanics Simulations by Means of Numerical Methods}
+\title{\Large Numerical Orbital Mechanics Simulations of the Solar System}
 
 \author{Håkon Tansem}
 
@@ -23,6 +23,17 @@
 \author{Bernhard Nornes Lotsberg}
 
 \begin{abstract}
+We implement an $N$-body simulator to solve the motion of objects in the 
+solar system. We compare the performance of the forward Euler and 
+velocity Verlet numerical schemes. In this case the Velocity Verlet 
+outperforms the forward Euler scheme as it has an error of $\sim 3$ 
+orders of magnitude lower due to its symplectic nature conserving 
+constants of motion in a Hamiltonian system.
+In this simulation the Earth's escape velocity from the Sun is found as 
+in the interval $v\in (8.86, 9.50)$ AU/Yr, which corresponds well with 
+the analytically derived value of $v\approx 8.88$ AU/Yr. We also implemented a general relativistic correction term in Newton's gravitational force to calculate the precession of Mercury's orbit. Our results of approximately $450400$ arcseconds per century deviates a large amount from the observed precession motion of approximately $43$ arcseconds when subtracting precession due to other effects like planetary interactions. Further investigations of systematic errors is needed for our method to resolve small scale motions like the perihelion precession of Mercury's orbit.
+\\\\
+Github repository containing source code for this paper can be found here:\\ \url{https://github.com/hakontan/FYS4150-Project-5}
 
 \end{abstract}
 
@@ -367,7 +378,7 @@ Forward Euler method had a calculation time of $10.35$ seconds.
 
 When calculating the escape velocity for the Earth with respect to the Sun, we
 found using \ref{eq:v_esc} that the escape velocity for the earth at a distance
-of $1$AU to be $8.86$AU/Yr. The escape velocity was also approximated
+of $1$AU to be $8.88$ AU/Yr. The escape velocity was also approximated
 numerically. This is shown in Figure \ref{fig:escape}. This result was simulated
 using the the Velocity-Verlet method with an initial distance of $1$AU from the
 Sun along the $x-$axis with a varying intial velocity in the $y-$direction. The
@@ -500,15 +511,11 @@ escape. One could however expect that at a smaller distance, let's
 say if we were to simulate a Sun-Mercury-system, the force could increase 
 for $\beta>2$ as $R<1$ AU.
 
-The analytically derived escape velocity for the Sun-Earth-system 
-is not high enough for the Earth to escape in our simulation shown  
-in Figure \ref{fig:escape}. The numerical escape velocity is somewhere 
-in the range $v\in(8.86, 9.5)$. Simulating with a smaller time step could 
-make the numerical escape velocity align more with the analytical, but 
-our previously discussed results indicate that this could also increase 
-the numerical error and therefore decrease accuracy. The best solution 
-here is likely to use a more sophisticated numerical scheme than 
-Velocity Verlet.
+Figure \ref{fig:escape} shows that the escape velocity is somewhere 
+in the range $v\in(8.86, 9.5)$ AU/Yr, which corresponds well with 
+the analytical escape velocity $v\approx 8.88$ AU/Yr. Whether this theoretical 
+velocity is the escape velocity in this simulated system is unclear 
+though, as it may not be accurate enough to recreate this.
 
 When simulating the Sun-Earth-Jupiter-system with regular masses and 
 initial values from \cite{nasa:2019} as shown in Figure 
