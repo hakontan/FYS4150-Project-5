@@ -18,20 +18,6 @@ int main(int argc, char* argv[]){
     }
     int Nyr = 100;
     int NperYr = 1e7;
-    //int writenr = 2e5;
-    /*
-    Nbody MercuryEinstein = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, true, 2);
-
-    MercuryEinstein.velocity_verlet();
-
-    MercuryEinstein.write_pos("MercuryEinsteinLarge");
-    MercuryEinstein.write_energis_angmom("MercuryEinsteinLarge");
-
-    Nbody MercuryNewton = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
-
-    MercuryNewton.velocity_verlet();
-    MercuryNewton.write_pos("MercuryNewtonLarge");
-    */
 
     Nbody MercuryEinstein = Nbody(Nyr, NperYr, "datafiles/" + input_filename, true);
     MercuryEinstein.velocity_verlet_mercury();

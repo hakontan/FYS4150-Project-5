@@ -19,12 +19,18 @@ int main(int argc, char* argv[]){
 
     int Nyr = 250;
     int NperYr = 1e5;
-    int writenr = 1e6;
+    int writenr = 1e5;
 
-    Nbody SolarSystem = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
+    Nbody OuterSolarSystem = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, false, 2);
 
-    SolarSystem.velocity_verlet();
-    SolarSystem.write_pos("SolarSystem", "datafiles/filestaskf/");
+    OuterSolarSystem.velocity_verlet();
+    OuterSolarSystem.write_pos("OuterSolarSystem", "datafiles/filestaskf/");
+
+    Nbody InnerSolarSystem = Nbody(5, NperYr, writenr, "datafiles/" + input_filename, false, 2);
+
+    InnerSolarSystem.velocity_verlet();
+    InnerSolarSystem.write_pos("InnerSolarSystem", "datafiles/filestaskf/");
+    
 
     return 0;
 }
