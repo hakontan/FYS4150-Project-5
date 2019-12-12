@@ -12,8 +12,8 @@ fonts = {
 
 plt.rcParams.update(fonts)
 
-filename_verlet = "simulation_Sun_Earthverlet"
-filename_euler = "simulation_Sun_Eartheuler"
+filename_verlet = "simulation_sunearth_custom1verlet"
+filename_euler = "simulation_sunearth_custom1euler"
 
 years = 2
 stepsperYr = np.array([100, 500, 1000, 1500, 2000, 3000, 4000])
