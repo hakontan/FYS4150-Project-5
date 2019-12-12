@@ -94,7 +94,6 @@ void Nbody::forward_euler() {
             system.bodies[j].pos += dt * system.bodies[j].vel;
             system.bodies[j].vel += dt * system.bodies[j].F / system.bodies[j].mass;
             system.update_force_potential();
-            system.update_cm();
 
             if (i == c * (int) std::round(N / (double) datapoints)) {
 
@@ -111,12 +110,14 @@ void Nbody::forward_euler() {
                 V_coords(c, 0) += dt * i;
                 K_coords(c, 0) += dt * i;
                 l_coords(c, 0) += dt * i;
-                center_of_mass(c, 0) = system.R_cm(0);
-                center_of_mass(c, 1) = system.R_cm(1);
-                center_of_mass(c, 2) = system.R_cm(2);
             }
         }
+        system.update_cm();
         if (i == c * (int) std::round(N / (double) datapoints)){
+            center_of_mass(c, 0) = system.R_cm(0);
+            center_of_mass(c, 1) = system.R_cm(1);
+            center_of_mass(c, 2) = system.R_cm(2);
+
             c++;
         }
 
@@ -140,7 +141,6 @@ void Nbody::velocity_verlet() {
             system.update_force_potential();
 
             system.bodies[j].vel += 0.5 * dt * (ai_prev + system.bodies[j].F / system.bodies[j].mass);
-            system.update_cm();
 
             if (i == c * (int) std::round(N / (double) datapoints)) {
                 x_coords(c, j) = system.bodies[j].pos[0];
@@ -156,12 +156,13 @@ void Nbody::velocity_verlet() {
                 V_coords(c, 0) += dt * i;
                 K_coords(c, 0) += dt * i;
                 l_coords(c, 0) += dt * i;
-                center_of_mass(c, 0) = system.R_cm(0);
-                center_of_mass(c, 1) = system.R_cm(1);
-                center_of_mass(c, 2) = system.R_cm(2);
             }
         }
+        system.update_cm();
         if (i == c * (int) std::round(N / (double) datapoints)){
+            center_of_mass(c, 0) = system.R_cm(0);
+            center_of_mass(c, 1) = system.R_cm(1);
+            center_of_mass(c, 2) = system.R_cm(2);
             c++;
         }
         if (i == c2 * (int) std::round(N / (double) datapoints)){
@@ -177,7 +178,6 @@ void Nbody::velocity_verlet_mercury() {
     This method is specialized to store the data for the first and last year
     of the calculation used in calculating the precession of mercury@s orbit
     */ 
-    int c2 = 0;
     int c = 0;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N_bodies; j++) {
@@ -186,17 +186,20 @@ void Nbody::velocity_verlet_mercury() {
             system.update_force_potential();
 
             system.bodies[j].vel += 0.5 * dt * (ai_prev + system.bodies[j].F / system.bodies[j].mass);
-            system.update_cm();
+            
 
             if (i < 0.5 * NperYr_) {
                 x_coords(i, j) = system.bodies[j].pos[0];
                 y_coords(i, j) = system.bodies[j].pos[1];
                 z_coords(i, j) = system.bodies[j].pos[2];
-                center_of_mass(i, 0) = system.R_cm(0);
-                center_of_mass(i, 1) = system.R_cm(1);
-                center_of_mass(i, 2) = system.R_cm(2);
                 t(i) = i * dt;
                 c = i + 1;
+                if (j == N_bodies - 1){
+                    system.update_cm();
+                    center_of_mass(i, 0) = system.R_cm(0);
+                    center_of_mass(i, 1) = system.R_cm(1);
+                    center_of_mass(i, 2) = system.R_cm(2);
+                }
 
             }
 
@@ -204,17 +207,19 @@ void Nbody::velocity_verlet_mercury() {
                 x_coords(c, j) = system.bodies[j].pos[0];
                 y_coords(c, j) = system.bodies[j].pos[1];
                 z_coords(c, j) = system.bodies[j].pos[2];
-                center_of_mass(c, 0) = system.R_cm(0);
-                center_of_mass(c, 1) = system.R_cm(1);
-                center_of_mass(c, 2) = system.R_cm(2);
                 t(c) = i * dt;
-                if (j == N_bodies){
+                
+                if (j == N_bodies - 1){
+                    system.update_cm();
+                    center_of_mass(c, 0) = system.R_cm(0);
+                    center_of_mass(c, 1) = system.R_cm(1);
+                    center_of_mass(c, 2) = system.R_cm(2);
                     c++;
                 }
-
             }
-
         }
+        system.update_cm();
+
     }
 }
 
@@ -246,6 +251,7 @@ void Nbody::write_pos(string filename, string directory, bool binary, bool time)
         y_coords.save(directory + "y_" + filename + ".txt", arma::arma_ascii);
         z_coords.save(directory + "z_" + filename + ".txt", arma::arma_ascii);
         center_of_mass.save(directory + "R_cm_" + filename + ".txt", arma::arma_ascii);
+        cout << center_of_mass.size() << " " << x_coords.size() << " " << y_coords.size() << endl;
     }
 
     if (time == true) {

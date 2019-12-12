@@ -95,10 +95,12 @@ void SolarSystem::update_cm() {
     R_cm = arma::zeros(3);
     V_cm = arma::zeros(3);
     total_mass = 0;
+    //cout << "before loop" << endl;
     for(int i = 0; i < bodies.size(); i++) {
         total_mass += bodies[i].mass;
         R_cm += bodies[i].pos * bodies[i].mass;
         V_cm += bodies[i].vel * bodies[i].mass;
+        //cout << R_cm << endl;
         }
     R_cm /= total_mass;
     V_cm /= total_mass;
@@ -135,6 +137,7 @@ arma::vec SolarSystem::calculate_force_einstein(double mass_i,
     l: double
         angular momentum of mass_i with respect to center of mass.
     */
+   
     return -(G * R * mass_i * mass_j) / std::pow(R_norm, 3)
-            * (1 + (3 * l * l / (R_norm * R_norm * C * C) ) );
+           * (1 + (3 * l * l / (R_norm * R_norm * C * C) ) );
 }

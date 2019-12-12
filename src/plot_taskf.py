@@ -29,4 +29,5 @@ ax.set_ylim([1.5 * np.min(x[:, -1]), 1.5 * np.max(x[:, -1])])
 ax.set_zlim([-3, 3])
 
 fig.tight_layout()
+plt.show()
 fig.savefig("../doc/Figures/InnerSolarSystem.pdf", dpi = 1000)

@@ -6,9 +6,9 @@ int main(){
 
 
     int Nyr = 15;
-    int NperYr = 50000;
+    int NperYr = 1e5;
     int writenr = 1e4;
-
+/*
     Nbody Jupiter1 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter.txt", false, 2);
 
     Jupiter1.velocity_verlet();
@@ -18,7 +18,7 @@ int main(){
 
     Jupiter10.velocity_verlet();
     Jupiter10.write_pos("SunEarthJupiter10", "datafiles/filestaske/");
-
+*/
     Nbody Jupiter1000 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter1000.txt", false, 2);
 
     Jupiter1000.velocity_verlet();
