@@ -20,18 +20,10 @@ R_Ein = np.sqrt((x_Ein[:, 1] - R_cm_Ein[:, 0]) ** 2 + (y_Ein[:, 1] - R_cm_Ein[:,
 index_p_Ein = signal.argrelmin(R_Ein, order = 3)
 index_p_Ein = index_p_Ein[0]
 
-print(x_New[index_p_New[-1], 1] , y_New[index_p_New[-1], 1])
-print(x_Ein[index_p_Ein[-1], 1] , y_Ein[index_p_Ein[-1], 1])
 theta_New_0 = 3600 * 180 / np.pi  * np.arctan(y_New[index_p_New[0], 1] / x_New[index_p_New[0], 1])
 theta_New_1 = 3600 * 180 / np.pi * np.arctan(y_New[index_p_New[-1], 1] / x_New[index_p_New[-1], 1])
 
 theta_Ein_0 = 3600* 180 / np.pi * np.arctan(y_Ein[index_p_Ein[0], 1] / x_Ein[index_p_Ein[0], 1])
 theta_Ein_1 = 3600* 180 / np.pi * np.arctan(y_Ein[index_p_Ein[-1], 1] / x_Ein[index_p_Ein[-1], 1])
 
-print(np.abs(theta_Ein_1 - theta_Ein_0), np.abs(theta_New_1 - theta_New_0))
-print(np.where(x_Ein[:, 1] == 0), len(index_p_Ein))
-fig, ax = plt.subplots()
-t = np.arange(len(R_Ein))
-ax.plot(t, R_New, "r")
-ax.plot(t[index_p_New], R_New[index_p_New], "go")
-plt.show()
+print("Arcsec Einstein: ", np.abs(theta_Ein_1 - theta_Ein_0), "Arcsec Newton: ", np.abs(theta_New_1 - theta_New_0))
