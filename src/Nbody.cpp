@@ -107,13 +107,13 @@ void Nbody::forward_euler() {
                 V_coords(c, j+1) = system.bodies[j].V;
                 K_coords(c, j+1) = system.bodies[j].kinetic_energy(system.V_cm);
                 l_coords(c, j+1) = system.bodies[j].angular_moment(system.R_cm, system.V_cm);
-                V_coords(c, 0) += dt * i;
-                K_coords(c, 0) += dt * i;
-                l_coords(c, 0) += dt * i;
             }
         }
         system.update_cm();
         if (i == c * (int) std::round(N / (double) datapoints)){
+            V_coords(c, 0) += dt * i;
+            K_coords(c, 0) += dt * i;
+            l_coords(c, 0) += dt * i;
             center_of_mass(c, 0) = system.R_cm(0);
             center_of_mass(c, 1) = system.R_cm(1);
             center_of_mass(c, 2) = system.R_cm(2);
@@ -153,13 +153,13 @@ void Nbody::velocity_verlet() {
                 V_coords(c, j+1) = system.bodies[j].V;
                 K_coords(c, j+1) = system.bodies[j].kinetic_energy(system.V_cm);
                 l_coords(c, j+1) = system.bodies[j].angular_moment(system.R_cm, system.V_cm);
-                V_coords(c, 0) += dt * i;
-                K_coords(c, 0) += dt * i;
-                l_coords(c, 0) += dt * i;
             }
         }
         system.update_cm();
         if (i == c * (int) std::round(N / (double) datapoints)){
+            V_coords(c, 0) += dt * i;
+            K_coords(c, 0) += dt * i;
+            l_coords(c, 0) += dt * i;
             center_of_mass(c, 0) = system.R_cm(0);
             center_of_mass(c, 1) = system.R_cm(1);
             center_of_mass(c, 2) = system.R_cm(2);

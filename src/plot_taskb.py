@@ -65,7 +65,6 @@ for i in range(7):
 
     verlet_r.append(np.abs(np.max(a_verlet) - earth_init_x))
     euler_r.append(np.abs(np.max(a_euler) - earth_init_x))
-    #ax.plot(x_coords_verlet[:, 1], y_coords_verlet[:, 1])
 
 fig, ax = plt.subplots(1, 2, figsize=[7.1014, 7.1014/1.618])
 ax = ax.ravel()
@@ -95,9 +94,8 @@ y_coords_euler = np.loadtxt(
     )
 
 fig, ax = plt.subplots(figsize=[3.35289, 3.35289])
-ax = ax.ravel()
 ax.plot(x_coords_verlet[:, 1], y_coords_verlet[:, 1], label="Velocity Verlet")
-ax.plot(x_coords_euler[:, 1], y_coords_euler[:, 1], label="Forward Euler")
+ax.plot(x_coords_euler[:, 1], y_coords_euler[:, 1], linestyle = "--", label="Forward Euler")
 ax.legend()
 ax.set_xlabel("x [AU]")
 ax.set_ylabel("y [AU]")
