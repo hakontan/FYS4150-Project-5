@@ -61,8 +61,8 @@ ax1000.plot(
     label="Jupiter X 1000",
 )
 
-ax1000.set_xlim([-5, 20])
-ax1000.set_ylim([-10, 2.5])
+ax1000.set_xlim([-7.5, 7.5])
+ax1000.set_ylim([-3, 5])
 ax1000.set_xlabel(r"$x$ [AU]")
 ax1000.set_ylabel(r"$y$ [AU]")
 ax1000.grid()

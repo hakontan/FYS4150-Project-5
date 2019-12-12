@@ -251,7 +251,6 @@ void Nbody::write_pos(string filename, string directory, bool binary, bool time)
         y_coords.save(directory + "y_" + filename + ".txt", arma::arma_ascii);
         z_coords.save(directory + "z_" + filename + ".txt", arma::arma_ascii);
         center_of_mass.save(directory + "R_cm_" + filename + ".txt", arma::arma_ascii);
-        cout << center_of_mass.size() << " " << x_coords.size() << " " << y_coords.size() << endl;
     }
 
     if (time == true) {
