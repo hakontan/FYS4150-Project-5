@@ -134,7 +134,7 @@ has the advantage of being more accurate than the Forward Euler, having a
 mathematical error term of $\mathcal{O}(h^3)$, in addition to requireing about
 the same amont of FLOPs. Also it is taylored towards conserving the total
 mechanical energy and angular momentum of a Hamiltonian system such as a
-$N$-body system, because it is a symplectic integration scheme (KILDER). We can write the
+$N$-body system, because it is a symplectic integration scheme (\cite{holmes:2007}). We can write the
 two coupled ODEs as 
 \begin{align}
     x_{i+1} &= x_i + hv_x^i + \frac{h^2}{2}a_x^i + \mathcal{O}(h^3)\\
@@ -451,6 +451,70 @@ the relativistic correction term and $450420$ withouth the correction term. This
 result was calculated over $100$ years with a step size of $10^7$ steps per year.
 
 \section{Discussion} \label{sec:discussion}
+As seen in the orbits in Figure \ref{fig:traj}, the Verlet method 
+keeps the Earth in a circular object, while the Euler method seems to 
+increase the total energy of the system as its orbital radius increases 
+with time. This is expected behaviour, as Verlet is known to be better
+at conserving energy than Euler. This observation also consistent with 
+Figure \ref{fig:error}, \ref{fig:energy} and \ref{fig:angmom}. An 
+interesting detail in the discrepancies shown in Figure \ref{fig:error}
+is that the error increases with smaller time-steps within the range 
+shown. This makes sense as errors in numerical schemes can be decomposed 
+into \begin{equation}
+\mathrm{err}_\mathrm{tot}=\mathrm{err}_\mathrm{Taylor} + \mathrm{err}_
+\mathrm{Numerical}, \label{eq:error_decomp}
+\end{equation} where $\mathrm{err}_\mathrm{Taylor}$ is the error from the 
+Taylor series used to derive the numerical scheme and $\mathrm{err}_
+\mathrm{Numerical}$ is the error caused by numerical round off. What is 
+likely happening here is that for Verlet 
+$\mathrm{err}_\mathrm{Taylor} \ll \mathrm{err}_\mathrm{Numerical}$, 
+and the numerical round off error increases with decreasing time step. 
+Verlet is clearly better suited than Euler for this kind of system.
+
+Figure \ref{fig:beta} seems to be consistent with Bertrand's theorem, 
+showing that only the Sun-Earth-system with gravity $F_g\propto R^{-2}$ 
+has a closed orbit. The Earth seems to escape the gravitational pull of 
+the Sun when $\beta>2$, as the gravitational pull would be weaker at 
+this distance. One could however expect that at a smaller distance, let's 
+say if we were to simulate a Sun-Mercury-system, the force could increase 
+for $\beta>2$ as $R<1$ AU.
+
+The escape velocity mention stuff here maybe! XD
+
+
+Increasing the mass of Jupiter in the Sun-Earth-Jupiter-system makes the 
+system behave increasingly chaotically, especially at 
+$1000 \cdot M_\mathrm{\jupiter}$. At ten times the normal mass, 
+Jupiter visibly affects the orbit of the Earth. This is easily spotted  
+when comparing Figure \ref{fig:jupiter} and \ref{fig:jupiter10}. 
+In Figure \ref{fig:jupiter1000} Jupiter 
+has a mass very similar to $M_\odot$, meaning the system devolves 
+into a chaotic three body system. At one point in time the Earth gets 
+very close to Jupiter, causing it to accelerate and escape the system 
+completely. This result may be non-physical, as we have not implemented 
+any collision effects in our solver and the Earth may have actually 
+collided with Jupiter here. 
+
+The simulation of all planets in the solar system in addition to Pluto and 
+the Tesla Roadster stays visibly stable for several years. Pluto seems to 
+have a closed orbit, and keeps its inclination. This indicates that 
+the Verlet scheme is well enough suited for visualisations of this scale. 
+If the simulations shown in Figure \ref{fig:outer} and \ref{fig:inner} 
+were run using Euler, the results previously discussed imply that the 
+system would erupt into chaos with all planets having their total energy 
+increased over time. This is something that is important to avoid, 
+especially as we wanted to simulate an entire orbit of Pluto of $\sim 250$  
+Earth years.
+
+We expected the precession of the Sun-Mercury-system to be $\sim 43''$, 
+but our results vary dramatically from this. This could imply that our 
+simulations aren't accurate enough to resolve details down to this small 
+scale. It could also imply that we have made some mistakes when 
+calculating the precession. This is something that is important to look 
+more into in the future. 
+
+
+
 
 \section{Conclusion} \label{sec:conclusion}
 
