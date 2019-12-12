@@ -138,8 +138,9 @@ $N$-body system, because it is a symplectic integration scheme (\cite{holmes:200
 two coupled ODEs as 
 \begin{align}
     x_{i+1} &= x_i + hv_x^i + \frac{h^2}{2}a_x^i + \mathcal{O}(h^3)\\
-    v_x^{i+1} &= v_x^i + \frac{h}{2}[a_x^{i+1} + a_x^i] + \mathcal{O}(h^3).
+    v_x^{i+1} &= v_x^i + \frac{h}{2}[a_x^{i+1} + a_x^i] + \mathcal{O}(h^3)
 \end{align}
+\cite{jensen:2015}.
 As oppose to the Forward Euler we see that the two equations in this scheme are
 not independent of eachother. To solve for the velcity at the next time step one
 needs the acceleration for the next time step as well. This acceleration is
@@ -247,11 +248,13 @@ changing the gravitational force to
 \end{align}
 for some $\beta\in[2, 3]$. To do this we simulate the orbit of several different
 values of $\beta$ and compare them. Our findings can than be theoretical
-expectations. According to Bertrand's theorem \citep[ch. 3.6]{goldstein:2001} the attractional central
-force must have a power law index $n = -\beta > -3$ for an orbit to be closed. This is so
+expectations. According to Bertrand's theorem \citep[ch. 3.6]{goldstein:2001}
+only inverse-square force, such as Newton's law of Universal gravity,
+exibit closed orbits. Generally to have a bound orbit one needs to have $\beta >
+3$ so
 that the effective potential $U_\mathrm{eff} = \frac{l^2}{2mr^2} -
 G\frac{M_\odot m}{(1-\beta)r^{\beta - 1}}$ has a local minimum around which the
-planet can oscillate. This is only the case when $\beta > 3$.
+planet can oscillate (\cite{ray:2004}).
 
 
 \subsection{The Three-Body Problem} \label{subsec:three_body_prob}
@@ -528,7 +531,7 @@ more into in the future.
 
 \section{Conclusion} \label{sec:conclusion}
 
-\nocite{jensen:2019}
+
 \newpage
 \bibliography{ref}
 \bibliographystyle{aasjournal}
