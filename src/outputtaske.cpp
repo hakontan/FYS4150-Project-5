@@ -6,7 +6,7 @@ int main(){
 
 
     int Nyr = 15;
-    int NperYr = 50000;
+    int NperYr = 1e5;
     int writenr = 1e4;
 
     Nbody Jupiter1 = Nbody(Nyr, NperYr, writenr, "datafiles/data_Sun_Earth_Jupiter.txt", false, 2);

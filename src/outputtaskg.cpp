@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     }
     int Nyr = 100;
     int NperYr = 1e7;
-    int writenr = 2e7;
+    //int writenr = 2e5;
     /*
     Nbody MercuryEinstein = Nbody(Nyr, NperYr, writenr, "datafiles/" + input_filename, true, 2);
 
