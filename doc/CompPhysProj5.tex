@@ -104,7 +104,7 @@ three dimensions we would need $6N$ coupled differential equations.
 
 
 
-\subsection{discretization and Numerical Solvers}
+\subsection{Discretization and Numerical Solvers}
 When solving the system of $6N$ coupled ODEs numically we need to discretize the
 equations. We do this by letting $x(t)\to x(t_i) = x_i$ where the time $t \to
 t_i = a + ih$, with $t\in[a, b]$ and $i = 0, 1, 2, \ldots n-1$. Then $a\to t_0$
@@ -156,7 +156,17 @@ As both schemes have similar amounts of FLOPs we expect them to perform
 similarly in a timing of the algorithms.
 
 
-\subsection{Testing the algorithms} \label{subsec:algo_test}
+\subsection{Testing the Algorithms} \label{subsec:algo_test}
+To fist test that the ODE solvers work properly we plot the trajectory of the
+Sun-Earth system with a circylar orbit. This is done by letting the Earth and
+Sun start at a separation of 1 AU and we give then the initial velocity
+correspnding to a circular orbit. This is found using that the gravitational and
+centripetal forces are equal for a circular orbit so that 
+\begin{align}
+    F &= m\frac{v^2}{r} = G\frac{M_\oplus M_\odot}{r^2} \\
+    &\implies v = \sqrt{\frac{GM_\odot}{r}}.
+\end{align}
+
 We know from classical mechanics that there are certain quantities that are
 constant over time, the so-called constants of motion. In our case where we
 consider a system of interacting in a conservative force potensial, the kinetic $K$,
@@ -176,7 +186,7 @@ gives us that
     \implies l = \pdv{L}{\dot{\phi}} = m r^2 \dot{\phi} = \rm{constant}.
 \end{align}
 This is a constant of Noether's theorem, where all symetries of a system result
-in a constant of motion (KILDE), such as the invatiance under an azimuth rotation in our
+in a constant of motion (\cite{leinaas:2018}), such as the invatiance under an azimuth rotation in our
 case. Furthermore, since there are no rigid-body constaints in our system that
 are time-dependent the total energy of the system is given by the Hamiltonian $H
 = E = K + V$. If we have a explicitly time-independent Lagrangian it follows
@@ -184,7 +194,7 @@ that the implicit time dependence of the Hamiltonian is given as
 \begin{align}
     \dv{H}{t} = \dv{E}{t} = \pdv{L}{t} = 0,
 \end{align} 
-which implies that the total energy of our system must be conserved (KILDER). In
+which implies that the total energy of our system must be conserved (\cite{leinaas:2018}). In
 the special case of a circular orbit the kinetic and potensial energies are also
 conserved, because the constant distance $r$ to the center of mass (CM) gives a
 constant potential energy and a constant orbital speed $v =
@@ -234,7 +244,7 @@ changing the gravitational force to
 \end{align}
 for some $\beta\in[2, 3]$. To do this we simulate the orbit of several different
 values of $\beta$ and compare them. Our findings can than be theoretical
-expectations. According to Bertrand's theorem (KILDER) the attractional central
+expectations. According to Bertrand's theorem \citep[ch. 3.6]{goldstein:2001} the attractional central
 force must have a power law index $n = -\beta > -3$ for an orbit to be closed. This is so
 that the effective potential $U_\mathrm{eff} = \frac{l^2}{2mr^2} -
 G\frac{M_\odot m}{(1-\beta)r^{\beta - 1}}$ has a local minimum around which the
@@ -271,14 +281,16 @@ We have now consideres a N-body simulation with two and three bodies. Next we
 add all planets from Mercury to Neptune, including the Sun and the dwarf planet
 Pluto, to our System. To see how low-mass objects behave in the Solar System
 simulation, we include Elon Musk's Tesla Roadster launched into orbit by
-Space-X. To get closed orbits for all bodies included, even Pluto, we simulate
+Space-X. All initial values for the celectial bodies were kindly provided by
+NASA (\url{http://ssd.jpl.nasa.gov/horizons.cgi#top}).
+To get closed orbits for all bodies included, even Pluto, we simulate
 about 250 yr of time.
 
 \subsection{Mercurie's Perihelion Precession}
 When looking closely at Mercury's orbit one can see that it is not simply a
 static closed ellipse, but that the semi-major axis of the ellipse is rotating
 slowly. This is the so-called Perihelion Precession of Mercury, and is of the
-order of 43 arcseconds per century. Regular Newtonian gravity cannot accound for
+order of 43 arcseconds per century (\cite{jensen:2019}). Regular Newtonian gravity cannot accound for
 this, however, including general relativistic effects may describe the
 precession better. In order to simulate this we implement the
 relativistic correction to Newtonian gravity written as 
@@ -287,7 +299,7 @@ relativistic correction to Newtonian gravity written as
     F = \frac{G M_\odot M_\oplus}{r^2}\left(1 + \frac{3l^2}{r c^2}\right),
 \end{align}
 where $l = |\vec{r}\times \vec{v}|$ is the magnitude of Mercury's angular
-momentum per mass and $c$ is the speed of light (KILDER).
+momentum per mass and $c$ is the speed of light \cite{jensen:2019}.
 
 In order to compute the perihelion angle $\theta_p$ we use $\tan \theta_p =
 \frac{y_p}{x_p}$, where $(x_p, y_p)$ is the plane position of the perihelion of
