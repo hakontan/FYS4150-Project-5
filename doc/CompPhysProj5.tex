@@ -337,25 +337,25 @@ distance of $1\mathrm{AU}$ from the sun with the calculated circular velocity.
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/circularcomparison.pdf}
-\caption{Trajectory Sun and Earth}
+\caption{Figure showing the trajectory for the Sun and Earth system initialized with the earth at a distance of $1$AU from the Sun with an initial circular velocity of $6.28$AU/Yr using both the Forward Euler and Velocity-Verlet integration methods. The simulation was run for two years with a timestep of $1500$ steps per year.}
 \label{fig:traj}
 \end{figure}
 
 \begin{figure*}
 \includegraphics[scale=1]{Figures/taskb_errors.pdf}
-\caption{Errors Euler and Verlet}
+\caption{Figure showing the discrepancy between initial starting position in a circular orbit for the Earth in the Sun-Earth system after one orbit as a function of timestep for the Forward Euler method and the Velocity-Verlet method.}
 \label{fig:error}
 \end{figure*}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_energies.pdf}
-\caption{Energies for Euler and Verlet}
+\caption{Figue showing the potential and kinetic energy as well as the total energy for the Earth in circular orbit using the Forward Euler and the Velocity Verlet method. The simulation was run over $200$ years using a timestep of $100000$ steps per year.}
 \label{fig:energy}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/taskb_angmom.pdf}
-\caption{Angular momentum for Euler and Verlet.}
+\caption{Figure showing the angular momentum of the Earth in circular orbit sing the Forward Euler and the Velocity Verlet method. The simulation was run over $200$ years using a timestep of $100000$ steps per year.}
 \label{fig:angmom}
 \end{figure}
 
@@ -376,18 +376,18 @@ slightly higher than circular velocity, namely $6.7$AU/Yr. The system was
 simulated for one year using $10000$ timesteps per year.
 
 
+\begin{figure}
+\includegraphics[scale=1]{Figures/espace.pdf}
+\caption{Figure showing the trajectory of the Earth in the Earth-Sun system with a varying initial velocity to see wether it reaches escape velocity. The earth is initialized with a distance of $1$AU of the Sun. The simulation was run using the Velocity-Verlet scheme for $1000$ years with a timestep of $1000$ steps per year.}
+\label{fig:escape}
+\end{figure}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/beta.pdf}
-\caption{Trajectory Earth Sun different $\beta$.}
+\caption{Figure showing the trajectory of the Earth in the Earth-Sun system for different $\beta$ as described in section \ref{sec:modgrav}. Here the Earth is initialized at a distance of $1$AU with an initial velocity of $6.7$AU/Yr. Slightly higher than circular orbit. The simulation was run using the Velocity-Verlet scheme for one year using a timestep of $10000$ timesteps per year.}
 \label{fig:beta}
 \end{figure}
 
-\begin{figure}
-\includegraphics[scale=1]{Figures/espace.pdf}
-\caption{Different velocities for Earth Sun system.}
-\label{fig:escape}
-\end{figure}
 
 The method was also tested using the Velocity-Verlet scheme for a three body system including the Sun, Earth and
 Jupiter. These simulations were initialized using the initial data for the three
@@ -401,35 +401,45 @@ well as the Tesla Roadster launched by SpaceX. This system was simulated for
 $250$ yeas with a timestep of $10000$ steps per year. Figure \ref{fig:outer}
 shows the full system while Figure \ref{fig:inner} shows the inner Solar system
 as the orbits of the inner planets are barely visible when including the orbits
-of the outer bodies.
+of the outer bodies. For the inner solar system the simulation was run for three
+years with a timestep of $10000$ steps per year.
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/jupiter.pdf}
-\caption{Jupiter normal weight}
+\caption{Figure showing the three-body solution of the Sun, Earth and Jupiter system
+with Jupiter having its normal mass. The simulation were initialized using the
+initial data for the three objects given by the Horizon-Web interface provided by NASA. The simulations
+were run for $15$ years with a timestep of $10000$ steps per year.}
 \label{fig:jupiter}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/jupiter10.pdf}
-\caption{Jupiter ten times size}
+\caption{igure showing the three-body solution of the Sun, Earth and Jupiter system
+with Jupiter having ten times its normal mass. The simulation were initialized using the
+initial data for the three objects given by the Horizon-Web interface provided by NASA. The simulations
+were run for $15$ years with a timestep of $10000$ steps per year.}
 \label{fig:jupiter10}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=1]{Figures/jupiter1000.pdf}
-\caption{Jupiter 1000 times size}
+\caption{igure showing the three-body solution of the Sun, Earth and Jupiter system
+with Jupiter having $1000$ times its normal mass. The simulation were initialized using the
+initial data for the three objects given by the Horizon-Web interface provided by NASA. The simulations
+were run for $15$ years with a timestep of $10000$ steps per year.}
 \label{fig:jupiter1000}
 \end{figure}
 
 \begin{figure*}
 \includegraphics[scale=1]{Figures/InnerSolarSystem.pdf}
-\caption{Zoom-in of full solar system}
+\caption{Figure Showing a solution for the inner Solar system using the Velocity-Verlet scheme. The simulation was run for three years with a timestep $10000$ steps per year. The initial data was given by the Horizon-Web interface provided by NASA}
 \label{fig:outer}
 \end{figure*}
 
 \begin{figure*}
 \includegraphics[scale=1]{Figures/OuterSolarSystem.pdf}
-\caption{Full solar system}
+\caption{Figure Showing a solution for the full Solar system using the Velocity-Verlet scheme. The simulation was run for $250$ years with a timestep $10000$ steps per year. The initial data was given by the Horizon-Web interface provided by NASA}
 \label{fig:inner}
 \end{figure*}
 
