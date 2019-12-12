@@ -134,7 +134,7 @@ has the advantage of being more accurate than the Forward Euler, having a
 mathematical error term of $\mathcal{O}(h^3)$, in addition to requireing about
 the same amont of FLOPs. Also it is taylored towards conserving the total
 mechanical energy and angular momentum of a Hamiltonian system such as a
-$N$-body system, because it is a symplectic integration scheme (KILDER). We can write the
+$N$-body system, because it is a symplectic integration scheme (\cite{holmes:2007}). We can write the
 two coupled ODEs as 
 \begin{align}
     x_{i+1} &= x_i + hv_x^i + \frac{h^2}{2}a_x^i + \mathcal{O}(h^3)\\
