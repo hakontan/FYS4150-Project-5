@@ -446,15 +446,34 @@ The escape velocity mention stuff here maybe! XD
 
 Increasing the mass of Jupiter in the Sun-Earth-Jupiter-system makes the 
 system behave increasingly chaotically, especially at 
-$1000 \cdot M_\mathrm{Jupiter}$. In Figure \ref{fig:jupiter1000} Jupiter 
+$1000 \cdot M_\mathrm{\jupiter}$. At ten times the normal mass, 
+Jupiter visibly affects the orbit of the Earth. This is easily spotted  
+when comparing Figure \ref{fig:jupiter} and \ref{fig:jupiter10}. 
+In Figure \ref{fig:jupiter1000} Jupiter 
 has a mass very similar to $M_\odot$, meaning the system devolves 
 into a chaotic three body system. At one point in time the Earth gets 
 very close to Jupiter, causing it to accelerate and escape the system 
 completely. This result may be non-physical, as we have not implemented 
-any collision effects in our solver and the Earth may have actually hit 
-Jupiter here. 
+any collision effects in our solver and the Earth may have actually 
+collided with Jupiter here. 
 
+The simulation of all planets in the solar system in addition to Pluto and 
+the Tesla Roadster stays visibly stable for several years. Pluto seems to 
+have a closed orbit, and keeps its inclination. This indicates that 
+the Verlet scheme is well enough suited for visualisations of this scale. 
+If the simulations shown in Figure \ref{fig:outer} and \ref{fig:inner} 
+were run using Euler, the results previously discussed imply that the 
+system would erupt into chaos with all planets having their total energy 
+increased over time. This is something that is important to avoid, 
+especially as we wanted to simulate an entire orbit of Pluto of $\sim 250$  
+Earth years.
 
+We expected the precession of the Sun-Mercury-system to be $\sim 43''$, 
+but our results vary dramatically from this. This could imply that our 
+simulations aren't accurate enough to resolve details down to this small 
+scale. It could also imply that we have made some mistakes when 
+calculating the precession. This is something that is important to look 
+more into in the future. 
 
 
 
