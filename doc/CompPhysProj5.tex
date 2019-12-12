@@ -66,7 +66,7 @@ bodies $m_j$. Thus we have the total gravitational force
     \label{eq:newtonian_gravity}
 \end{align}
 where we used Newton's second law to find the acceleration. In this $N$-body problem
-celectial bodies are interacing with each other, affecting each others motions.
+celestial bodies are interacting with each other, affecting each others motions.
 When simulating our Solar System, it is often common to let the Sun be static at
 the origin due to its mass being many orders of magnitude larger than that of
 the planet, limiting its motion to a small wiggle. We will however include the
@@ -216,7 +216,7 @@ Also to research the stability of the two algorithms over
 time we simulate several Sun-Earth systems using different time steps $h$ and
 chenck how close to thir staring point thay get after one orbit. 
 
-\subsection{Escape Velocity and Modifies Gravitational Force}\label{sec:modgrav}
+\subsection{Escape Velocity and Modified Gravitational Force}\label{sec:modgrav}
 Next we will consider a Sun-Earth system where the Earth starts 1 AU from the
 Sun. We now want to find which initial velocity the Earth must have for it to
 escape the Sun's gravitational field. To do this we run several simulations,
@@ -475,59 +475,86 @@ into \begin{equation}
 \mathrm{Numerical}, \label{eq:error_decomp}
 \end{equation} where $\mathrm{err}_\mathrm{Taylor}$ is the error from the 
 Taylor series used to derive the numerical scheme and $\mathrm{err}_
-\mathrm{Numerical}$ is the error caused by numerical round off. What is 
-likely happening here is that for Verlet 
+\mathrm{Numerical}$ is the error caused by numerical round off. A 
+possible explanation for this is that
 $\mathrm{err}_\mathrm{Taylor} \ll \mathrm{err}_\mathrm{Numerical}$, 
 and the numerical round off error increases with decreasing time step. 
-Verlet is clearly better suited than Euler for this kind of system.
+The total error is clearly better for the Velocity Verlet scheme in 
+this case.
 
-Figure \ref{fig:beta} seems to be consistent with Bertrand's theorem, 
+When researching gravitational forces with different radial power laws, 
+the results shown Figure \ref{fig:beta} seem to be consistent with 
+Bertrand's theorem as discussed in Section \ref{sec:modgrav}, 
 showing that only the Sun-Earth-system with gravity $F_g\propto R^{-2}$ 
-has a closed orbit. The Earth seems to escape the gravitational pull of 
-the Sun when $\beta>2$, as the gravitational pull would be weaker at 
-this distance. One could however expect that at a smaller distance, let's 
+has a closed orbit. According to the theorem all the shown systems will 
+be bound, but only the Newtonian gravitational force with $\beta=2$ will 
+have a closed orbit. For $\beta>2$ we expect a perihelion precession. 
+The Earth's orbit for $\beta>2$ will experience a  
+weaker gravitational force and will drift further out before returning 
+towards the sun. It will not return to same initial starting point, but 
+will instead have a precession motion around the Sun if it doesn't 
+escape. One could however expect that at a smaller distance, let's 
 say if we were to simulate a Sun-Mercury-system, the force could increase 
 for $\beta>2$ as $R<1$ AU.
 
-The escape velocity mention stuff here maybe! XD
+The analytically derived escape velocity for the Sun-Earth-system 
+is not high enough for the Earth to escape in our simulation shown  
+in Figure \ref{fig:escape}. The numerical escape velocity is somewhere 
+in the range $v\in(8.86, 9.5)$. Simulating with a smaller time step could 
+make the numerical escape velocity align more with the analytical, but 
+our previously discussed results indicate that this could also increase 
+the numerical error and therefore decrease accuracy. The best solution 
+here is likely to use a more sophisticated numerical scheme than 
+Velocity-Verlet.
 
-
+When simulating the Sun-Earth-Jupiter-system with regular masses and 
+initial values from \cite{nasa:2019} as shown in Figure 
+\ref{fig:jupiter} we see that system behaves as observed in nature 
+where all three bodies exhibit closed, stable orbits around the CM.
 Increasing the mass of Jupiter in the Sun-Earth-Jupiter-system makes the 
 system behave increasingly chaotically, especially at 
 $1000 \cdot M_\mathrm{\jupiter}$. At ten times the normal mass, 
 Jupiter visibly affects the orbit of the Earth. This is easily spotted  
-when comparing Figure \ref{fig:jupiter} and \ref{fig:jupiter10}. 
-In Figure \ref{fig:jupiter1000} Jupiter 
-has a mass very similar to $M_\odot$, meaning the system devolves 
-into a chaotic three body system. At one point in time the Earth gets 
-very close to Jupiter, causing it to accelerate and escape the system 
-completely. This result may be non-physical, as we have not implemented 
-any collision effects in our solver and the Earth may have actually 
-collided with Jupiter here. 
+when comparing Figure \ref{fig:jupiter} and \ref{fig:jupiter10}. Every 
+time the Earth aligns with Jupiter it will receive a larger gravitational tug than if Jupiter has its regular mass. This system may settle in a new equilibrium in the future, but our results is not sufficient enough to determine whether this will happen. It is also worth noting that our initial data is gathered from a stable system where Jupiter has its regular mass. Therefore it is expected that the system initially behaves unstable as it not in an equilibrium state. Note also that the Sun, usually orbiting a common CM, now ends up in a larger distance from the new CM in its orbital motion. 
+In Figure \ref{fig:jupiter1000} Jupiter has a mass very similar to $M_\odot$, meaning the system devolves 
+into a chaotic three body system. One can see that the Sun and Jupiter settles into a stable system where both orbit a common CM. The earth however is put into a very unstable orbit experiencing gravitational force from two bodies approximately $10^6$ times as massive. The initial starting point for the Earth would be an equilibrium if Jupiter has its regular mass. Instead with Jupiter having $1000$ times its original mass, we have effectively added another Sun into the system. This will massively perturb the motion of Earth and it will sooner or later experience a close encounter with one of the other bodies being ejected from the system. This may also have resulted in a collision. Our method  has not implemented any collisional effects and since we treat our bodies as point masses a real collision would result in a small radial distance resulting in a large force amplifying the slingshot effect.
 
 The simulation of all planets in the solar system in addition to Pluto and 
-the Tesla Roadster stays visibly stable for several years. Pluto seems to 
+the Tesla Roadster launched by SpaceX, as seen in figures \ref{fig:outer} and \ref{fig:inner}, stays visibly stable for several years. Pluto seems to 
 have a closed orbit, and keeps its inclination. This indicates that 
-the Verlet scheme is well enough suited for visualisations of this scale. 
+the Velocity Verlet scheme is well enough suited for visualisations of this scale. 
 If the simulations shown in Figure \ref{fig:outer} and \ref{fig:inner} 
-were run using Euler, the results previously discussed imply that the 
-system would erupt into chaos with all planets having their total energy 
-increased over time. This is something that is important to avoid, 
-especially as we wanted to simulate an entire orbit of Pluto of $\sim 250$  
-Earth years.
+were run using Euler, We have seen from Figure \ref{fig:traj} that the orbits would spiral outwards due to Forward Euler adding to the total energy. In order to have Pluto complete one full orbit we had to simulate for $250$ years. During this time the inner planets of the Solar system would have completed many orbits and would have been perturbed by the spiralling motion. This could result in possible close encounters with either themselves or the outermost massive planets destabilizing the system. However the fact that the inner solar system stays stable for $250$ years is a strong indication that the Velocity Verlet scheme remains stable. The added low-mass Tesla Roadster behavies very similar to the other planets in its orbital motion. However, in a possible future fly-by, it could gain enough angular momentum from one of the planets to achieve escape velocity.
 
-We expected the precession of the Sun-Mercury-system to be $\sim 43''$, 
+As mentioned when discussing the results in Figure \ref{fig:beta}, a 
+inverse-power $\beta>2$ will lead to a perihelion precession. This is effectively 
+what happens when adding the relativistic correction term as shown in 
+(\ref{eq:relcorrection}), as the correction term has $\beta=4$. This 
+will slightly perturb the closed elliptical orbit.
+We expected the precession of the Sun-Mercury system to be $\sim 43''$, 
 but our results vary dramatically from this. This could imply that our 
 simulations aren't accurate enough to resolve details down to this small 
-scale. It could also imply that we have made some mistakes when 
-calculating the precession. This is something that is important to look 
-more into in the future. 
+scale. However, as we have simulated Mercury's orbit with a time step of 
+$10^{-7}$ years, we should observe an accurate estimate of the perihelion 
+precession. This is not the case, indicating that there are systematic 
+errors in our integrator or in the post-processing of the data. Perhaps 
+there is also some undetected systematic error in the implementation of 
+our method. This is something that is important to look 
+more into in the future. Other potential sources of the observed 
+discrepancy could be a perihelion precession inherent to the Velocity 
+Verlet scheme. In order to resolve the motion in a high enough detail the 
+timestep had to be low enough in order to measure any significant small 
+scale motions like the precession of mercury. We can also see from Figure 
+\ref{fig:error} that in our implementation of the velocity-verlet scheme, 
+this will also increase the error in the orbital motion resulting in 
+motions that may drown the precession motion we were supposed to measure.
 
 
 
 
 \section{Conclusion} \label{sec:conclusion}
-
+We have created an n-body simulator implementing Newton's law of gravitation and tested it on a solar system scale.
 \nocite{jensen:2019}
 \newpage
 \bibliography{ref}
